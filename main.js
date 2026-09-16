@@ -1,1 +1,3 @@
-import { db } from './supabase.js';satisfies
+import { db } from './supabase.js';
+
+export { db };

@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Control Apícola</title>
+    <meta name="description" content="Sistema de registro y control de colmenas para apicultores">
+    <meta property="og:title" content="Control Apícola">
+    <meta property="og:description" content="Sistema de registro y control de colmenas para apicultores">
+
+    <!-- Conexión con el archivo CSS -->
+    <link rel="stylesheet" href="estilos.css">
+
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+<!-- ================= LOGIN ================= -->
+
+<div id="login" class="login-container">
+    <div class="login-box">
+        <div class="logo">🐝</div>
+        <h1>Control Apícola</h1>
+        <p class="subtitle">
+            Sistema de registro y control de colmenas
+        </p>
+
+        <input
+            type="text"
+            id="nombre"
+            placeholder="Nombre completo"
+        >
+
+        <input
+            type="text"
+            id="cedula"
+            placeholder="Cédula"
+        >
+
+        <input
+            type="number"
+            id="edad"
+            placeholder="Edad"
+            min="1"
+            max="120"
+        >
+
+        <button onclick="iniciarSesion()">
+            🐝 Iniciar sesión
+        </button>
+
+        <p id="loginMensaje" class="message"></p>
+    </div>
+</div>
+
+<div id="app">
+
+<header>
+    <h2>🐝 Control Apícola</h2>
+    <button
+        class="logout"
+        onclick="cerrarSesion()">
+        Cerrar sesión
+    </button>
+</header>
+
+<div class="container">
+    <div class="welcome">
+        <h2>
+            Bienvenido/a,
+            <span id="usuarioNombre"></span> 👋
+        </h2>
+        <p>
+            Aquí puedes administrar la información de tus colmenas.
+        </p>
+    </div>
+
+    <div class="summary">
+        <div class="card">
+            <span>🐝</span>
+            <h4>Colmenas</h4>
+            <p id="totalColmenas">0</p>
+        </div>
+
+        <div class="card">
+            <span>🍯</span>
+            <h4>Miel producida</h4>
+            <p id="totalMiel">0 kg</p>
+        </div>
+
+        <div class="card">
+            <span>📉</span>
+            <h4>Pérdidas</h4>
+            <p id="totalPerdidas">0</p>
+        </div>
+
+        <div class="card">
+            <span>💰</span>
+            <h4>Ganancia</h4>
+            <p id="totalGanancia">$0</p>
+        </div>
+    </div>
+
+    <!-- ================= FORMULARIO ================= -->
+
+    <div class="form-card">
+        <h3>📋 Nuevo registro</h3>
+        <div class="grid">
+            <div>
+                <label>
+                    Cantidad de colmenas
+                </label>
+                <input
+                    type="number"
+                    id="colmenas"
+                    min="0"
+                    placeholder="Ej: 20"
+                >
+            </div>
+
+            <div>
+                <label>
+                    Colmenas perdidas
+                </label>
+                <input
+                    type="number"
+                    id="perdidas"
+                    min="0"
+                    placeholder="Ej: 2"
+                >
+            </div>
+
+            <div>
+                <label>
+                    Cantidad de miel (kg)
+                </label>
+                <input
+                    type="number"
+                    id="miel"
+                    min="0"
+                    step="0.01"
+                    placeholder="Ej: 50"
+                >
+            </div>
+
+            <div>
+                <label>
+                    Precio por kg de miel
+                </label>
+                <input
+                    type="number"
+                    id="precio"
+                    min="0"
+                    step="0.01"
+                    placeholder="Ej: 18000"
+                >
+            </div>
+
+            <div>
+                <label>
+                    Gastos
+                </label>
+                <input
+                    type="number"
+                    id="gastos"
+                    min="0"
+                    step="0.01"
+                    placeholder="Ej: 200000"
+                >
+            </div>
+        </div>
+
+        <button onclick="guardarRegistro()">
+            💾 Guardar registro
+        </button>
+
+        <p
+            id="registroMensaje"
+            class="message">
+        </p>
+    </div>
+
+    <!-- ================= HISTORIAL ================= -->
+
+    <div class="form-card">
+        <h3>📊 Historial de registros</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Colmenas</th>
+                        <th>Pérdidas</th>
+                        <th>Miel (kg)</th>
+                        <th>Precio/kg</th>
+                        <th>Ingresos</th>
+                        <th>Gastos</th>
+                        <th>Ganancia</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaRegistros"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<script>
+// ================= DATOS DEL USUARIO =================
+let usuario =
+    JSON.parse(
+        localStorage.getItem("usuarioApicola")
+    );
+
+let registros =
+    JSON.parse(
+        localStorage.getItem("registrosApicola")
+    ) || [];
+
+// ================= INICIAR SESIÓN =================
+function iniciarSesion() {
+    const nombre =
+        document
+        .getElementById("nombre")
+        .value
+        .trim();
+
+    const cedula =
+        document
+        .getElementById("cedula")
+        .value
+        .trim();
+
+    const edad =
+        document
+        .getElementById("edad")
+        .value;
+
+    const mensaje =
+        document
+        .getElementById("loginMensaje");
+
+    if (
+        nombre === "" ||
+        cedula === "" ||
+        edad === ""
+    ) {
+        mensaje.textContent =
+            "⚠️ Por favor completa todos los campos.";
+        return;
+    }
+
+    if (edad < 1 || edad > 120) {
+        mensaje.textContent =
+            "⚠️ Ingresa una edad válida.";
+        return;
+    }
+
+    usuario = {
+        nombre: nombre,
+        cedula: cedula,
+        edad: edad
+    };
+
+    localStorage.setItem(
+        "usuarioApicola",
+        JSON.stringify(usuario)
+    );
+
+    mostrarAplicacion();
+}
+
+// ================= MOSTRAR APLICACIÓN =================
+function mostrarAplicacion() {
+    document
+        .getElementById("login")
+        .style.display = "none";
+
+    document
+        .getElementById("app")
+        .style.display = "block";
+
+    document
+        .getElementById("usuarioNombre")
+        .textContent = usuario.nombre;
+
+    mostrarRegistros();
+}
+
+// ================= CERRAR SESIÓN =================
+function cerrarSesion() {
+    document
+        .getElementById("app")
+        .style.display = "none";
+
+    document
+        .getElementById("login")
+        .style.display = "flex";
+}
+
+// ================= GUARDAR REGISTRO =================
+function guardarRegistro() {
+    const colmenas =
+        Number(
+            document
+            .getElementById("colmenas")
+            .value
+        );
+
+    const perdidas =
+        Number(
+            document
+            .getElementById("perdidas")
+            .value
+        );
+
+    const miel =
+        Number(
+            document
+            .getElementById("miel")
+            .value
+        );
+
+    const precio =
+        Number(
+            document
+            .getElementById("precio")
+            .value
+        );
+
+    const gastos =
+        Number(
+            document
+            .getElementById("gastos")
+            .value
+        );
+
+    const mensaje =
+        document
+        .getElementById("registroMensaje");
+
+    if (
+        colmenas < 0 ||
+        perdidas < 0 ||
+        miel < 0 ||
+        precio < 0 ||
+        gastos < 0
+    ) {
+        mensaje.textContent =
+            "⚠️ Los valores no pueden ser negativos.";
+        return;
+    }
+
+    if (
+        document
+        .getElementById("colmenas")
+        .value === "" ||
+        document
+        .getElementById("miel")
+        .value === "" ||
+        document
+        .getElementById("precio")
+        .value === ""
+    ) {
+        mensaje.textContent =
+            "⚠️ Completa los campos principales.";
+        return;
+    }
+
+    // CÁLCULOS
+    const ingresos =
+        miel * precio;
+
+    const ganancia =
+        ingresos - gastos;
+
+    // REGISTRO
+    const registro = {
+        fecha:
+            new Date()
+            .toLocaleDateString(),
+        colmenas:
+            colmenas,
+        perdidas:
+            perdidas,
+        miel:
+            miel,
+        precio:
+            precio,
+        ingresos:
+            ingresos,
+        gastos:
+            gastos,
+        ganancia:
+            ganancia
+    };
+
+    registros.push(registro);
+
+    localStorage.setItem(
+        "registrosApicola",
+        JSON.stringify(registros)
+    );
+
+    mensaje.style.color = "green";
+    mensaje.textContent =
+        "✅ Registro guardado correctamente.";
+
+    // LIMPIAR FORMULARIO
+    document
+        .getElementById("colmenas")
+        .value = "";
+    document
+        .getElementById("perdidas")
+        .value = "";
+    document
+        .getElementById("miel")
+        .value = "";
+    document
+        .getElementById("precio")
+        .value = "";
+    document
+        .getElementById("gastos")
+        .value = "";
+
+    mostrarRegistros();
+}
+
+// ================= MOSTRAR REGISTROS =================
+function mostrarRegistros() {
+    const tabla =
+        document
+        .getElementById("tablaRegistros");
+
+    tabla.innerHTML = "";
+
+    let totalColmenas = 0;
+    let totalMiel = 0;
+    let totalPerdidas = 0;
+    let totalGanancia = 0;
+
+    registros.forEach(
+        (registro, index) => {
+            totalColmenas +=
+                registro.colmenas;
+            totalMiel +=
+                registro.miel;
+            totalPerdidas +=
+                registro.perdidas;
+            totalGanancia +=
+                registro.ganancia;
+
+            const fila =
+                document.createElement("tr");
+
+            fila.innerHTML = `
+                <td>
+                    ${registro.fecha}
+                </td>
+                <td>
+                    ${registro.colmenas}
+                </td>
+                <td>
+                    ${registro.perdidas}
+                </td>
+                <td>
+                    ${registro.miel.toFixed(2)}
+                </td>
+                <td>
+                    ${formatoDinero(
+                        registro.precio
+                    )}
+                </td>
+                <td>
+                    ${formatoDinero(
+                        registro.ingresos
+                    )}
+                </td>
+                <td>
+                    ${formatoDinero(
+                        registro.gastos
+                    )}
+                </td>
+                <td>
+                    ${formatoDinero(
+                        registro.ganancia
+                    )}
+                </td>
+                <td>
+                    <button
+                        class="delete"
+                        onclick="
+                            eliminarRegistro(${index})
+                        "
+                    >
+                        🗑️ Eliminar
+                    </button>
+                </td>
+            `;
+
+            tabla.appendChild(fila);
+        }
+    );
+
+    document
+        .getElementById("totalColmenas")
+        .textContent =
+        totalColmenas;
+
+    document
+        .getElementById("totalMiel")
+        .textContent =
+        totalMiel.toFixed(2) + " kg";
+
+    document
+        .getElementById("totalPerdidas")
+        .textContent =
+        totalPerdidas;
+
+    document
+        .getElementById("totalGanancia")
+        .textContent =
+        formatoDinero(totalGanancia);
+}
+
+// ================= ELIMINAR =================
+function eliminarRegistro(index) {
+    if (
+        confirm(
+            "¿Seguro que quieres eliminar este registro?"
+        )
+    ) {
+        registros.splice(index, 1);
+
+        localStorage.setItem(
+            "registrosApicola",
+            JSON.stringify(registros)
+        );
+
+        mostrarRegistros();
+    }
+}
+
+// ================= FORMATO DINERO =================
+function formatoDinero(valor) {
+    return new Intl.NumberFormat(
+        "es-CO",
+        {
+            style: "currency",
+            currency: "COP",
+            maximumFractionDigits: 0
+        }
+    ).format(valor);
+}
+
+// ================= CARGAR SESIÓN =================
+if (usuario) {
+    mostrarAplicacion();
+}
+</script>
+
+</body>
+</html>

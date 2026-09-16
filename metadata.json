@@ -1,0 +1,6 @@
+{
+  "name": "Control Apícola",
+  "description": "Sistema de registro y control de colmenas para apicultores",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

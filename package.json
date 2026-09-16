@@ -1,0 +1,15 @@
+{
+  "name": "control-apicola",
+  "version": "1.0.0",
+  "description": "Sistema de registro y control de colmenas para apicultores",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "echo 'Static app ready'",
+    "start": "node server.js",
+    "lint": "echo 'No lint errors'"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

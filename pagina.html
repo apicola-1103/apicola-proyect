@@ -36,17 +36,9 @@
             <a href="#caracteristicas">Características</a>
             <a href="#calculadora">Calculadora Apícola</a>
             <a href="#testimonios">Testimonios</a>
-            <a href="#acceso">Acceso Apicultor</a>
+            <a href="#consejos">Consejos</a>
+            <a href="#iniciar-sesion" class="nav-login-link" onclick="abrirModoAuth()">🔑 Iniciar Sesión / Cuenta Única</a>
         </nav>
-
-        <div class="landing-actions">
-            <a href="#acceso" class="btn-nav-outline" onclick="abrirModoAuth('login')">
-                Iniciar Sesión
-            </a>
-            <a href="#acceso" class="btn-nav-primary" onclick="abrirModoAuth('register')">
-                <span>🐝 Registrar Apiario</span>
-            </a>
-        </div>
     </header>
 
     <!-- 1. Hero Section -->
@@ -65,12 +57,12 @@
         </p>
 
         <div class="hero-cta-group">
-            <a href="#acceso" class="btn-hero-primary" onclick="abrirModoAuth('login')">
-                <span>🍯 Iniciar Sesión en mi Apiario</span>
+            <a href="#consejos" class="btn-hero-primary">
+                <span>💡 Ver Consejos para Cuidar Colmenas</span>
             </a>
-            <button type="button" class="btn-hero-secondary" onclick="llenarAccesoDemo()">
-                <span>⚡ Ver Demostración en Vivo</span>
-            </button>
+            <a href="#calculadora" class="btn-hero-secondary">
+                <span>📊 Probar Calculadora Apícola</span>
+            </a>
         </div>
 
         <!-- Marquee Media Carrier -->
@@ -334,53 +326,197 @@
         </div>
     </section>
 
-    <!-- 5. Sección de Acceso / Login y Registro -->
-    <section class="access-section" id="acceso">
+    <!-- 5. Sección de Consejos y Métodos para el Cuidado de Colmenas -->
+    <section class="comments-section" id="consejos">
+        <a id="comentarios" style="display:none;"></a>
+        <div class="section-container">
+            <div class="section-head">
+                <div class="hero-kicker" style="margin: 0 auto 12px; display: inline-flex;">
+                    <span>💡</span>
+                    <span>Intercambio de Consejos Apícolas</span>
+                </div>
+                <h2>Consejos y Métodos para el Cuidado de Colmenas</h2>
+                <p>Un espacio colaborativo donde apicultores comparten técnicas, métodos tradicionales e innovadores, manejo sanitario y diversas formas de proteger y fortalecer tus colmenas.</p>
+            </div>
+
+            <!-- Stats Bar / Resumen de la Comunidad de Consejos -->
+            <div class="comments-summary-card">
+                <div class="summary-metric">
+                    <div class="summary-rating">
+                        <span class="rating-number" id="ratingPromedio">4.9</span>
+                        <div class="stars-display" id="starsPromedio">
+                            ★★★★★
+                        </div>
+                    </div>
+                    <div class="summary-label">Efectividad promedio de las técnicas compartidas</div>
+                </div>
+                <div class="summary-divider"></div>
+                <div class="summary-metric">
+                    <div class="summary-value" id="contadorTotalConsejos">5</div>
+                    <div class="summary-label">Consejos y métodos de cuidado activos</div>
+                </div>
+                <div class="summary-divider"></div>
+                <div class="summary-metric">
+                    <div class="summary-value" style="color: #16a34a;">100%</div>
+                    <div class="summary-label">Técnicas probadas en campo por apicultores</div>
+                </div>
+            </div>
+
+            <!-- Formulario y Muro de Consejos en Layout de 2 columnas -->
+            <div class="comments-layout">
+                <!-- Columna Izquierda: Formulario para Agregar Consejo -->
+                <div class="comment-form-card">
+                    <div class="form-card-header">
+                        <h3>💡 Compartir Consejo de Cuidado</h3>
+                        <p>Publica tus métodos de manejo, trucos prácticos o recetas para mantener tus colmenas fuertes.</p>
+                    </div>
+
+                    <form id="consejoForm" onsubmit="event.preventDefault(); publicarConsejo();">
+                        <div class="form-group">
+                            <label for="consejoNombre">Tu Nombre o Seudónimo *</label>
+                            <input 
+                                type="text" 
+                                id="consejoNombre" 
+                                placeholder="Ej: Don Carlos Mendoza" 
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="consejoUbicacion">Apiario y Departamento / Municipio</label>
+                            <input 
+                                type="text" 
+                                id="consejoUbicacion" 
+                                placeholder="Ej: Apiario El Roble · Boyacá"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="consejoCategoria">Área o Tipo de Cuidado *</label>
+                            <select id="consejoCategoria" class="form-select" required>
+                                <option value="Sanidad y Varroa">🩺 Sanidad, Varroa y Enfermedades</option>
+                                <option value="Nutrición y Alimentación">🍯 Nutrición y Alimentación Artificial</option>
+                                <option value="Clima y Protección">🌧️ Clima, Humedad y Aislamiento Térmico</option>
+                                <option value="Reinas y Enjambres">👑 Manejo de Reinas y Enjambrazón</option>
+                                <option value="Métodos Ecológicos">🌿 Métodos Ecológicos y Naturales</option>
+                                <option value="Piqueras y Manejo">🛠️ Piqueras, Trampas y Manejo de Apiario</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="consejoMetodo">Enfoque o Técnica de Cuidado</label>
+                            <select id="consejoMetodo" class="form-select">
+                                <option value="Método Preventivo">🛡️ Método Preventivo</option>
+                                <option value="Método Orgánico / Natural">🌿 Método Orgánico / Natural</option>
+                                <option value="Manejo Tradicional de Campo">🪵 Manejo Tradicional de Campo</option>
+                                <option value="Técnica de Estimulación">⚡ Técnica de Estimulación</option>
+                                <option value="Control Físico y Sanitario">🩺 Control Físico y Sanitario</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Efectividad Comprobada de este Consejo</label>
+                            <div class="star-rating-selector" id="starRatingSelector">
+                                <span class="star-btn active" data-value="1" onclick="seleccionarEstrellas(1)">★</span>
+                                <span class="star-btn active" data-value="2" onclick="seleccionarEstrellas(2)">★</span>
+                                <span class="star-btn active" data-value="3" onclick="seleccionarEstrellas(3)">★</span>
+                                <span class="star-btn active" data-value="4" onclick="seleccionarEstrellas(4)">★</span>
+                                <span class="star-btn active" data-value="5" onclick="seleccionarEstrellas(5)">★</span>
+                                <span class="star-rating-text" id="starRatingLabel">5 de 5 estrellas (Muy Efectivo)</span>
+                            </div>
+                            <input type="hidden" id="consejoRating" value="5">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="consejoTexto">Detalle del Consejo y Pasos para Realizarlo *</label>
+                            <textarea 
+                                id="consejoTexto" 
+                                rows="4" 
+                                placeholder="Describe con claridad tu forma de cuidar las colmenas: ¿qué materiales o insumos usas?, ¿cómo y cuándo lo aplicas?, ¿qué precauciones tomar y qué resultados da?..."
+                                required
+                            ></textarea>
+                            <div class="char-count" id="charCount">0 / 600 caracteres</div>
+                        </div>
+
+                        <button type="submit" class="btn-primary" id="btnPublicarConsejo">
+                            <span>💡 Publicar Consejo</span>
+                        </button>
+
+                        <div id="consejoMensaje" class="message-box" style="display: none;"></div>
+                    </form>
+                </div>
+
+                <!-- Columna Derecha: Lista de Consejos y Filtros -->
+                <div class="comments-feed-wrapper">
+                    <div class="feed-header">
+                        <div class="feed-title-wrap">
+                            <h3>Consejos de la Comunidad</h3>
+                            <span class="feed-badge" id="feedBadgeCount">5 consejos</span>
+                        </div>
+
+                        <!-- Filtros por categoría de cuidado -->
+                        <div class="comment-filter-pills" id="consejoFilters">
+                            <button type="button" class="filter-pill active" onclick="filtrarConsejos('Todos', this)">Todos los Métodos</button>
+                            <button type="button" class="filter-pill" onclick="filtrarConsejos('Sanidad y Varroa', this)">🩺 Sanidad y Varroa</button>
+                            <button type="button" class="filter-pill" onclick="filtrarConsejos('Nutrición y Alimentación', this)">🍯 Nutrición</button>
+                            <button type="button" class="filter-pill" onclick="filtrarConsejos('Clima y Protección', this)">🌧️ Clima</button>
+                            <button type="button" class="filter-pill" onclick="filtrarConsejos('Reinas y Enjambres', this)">👑 Reinas</button>
+                            <button type="button" class="filter-pill" onclick="filtrarConsejos('Piqueras y Manejo', this)">🛠️ Piqueras y Manejo</button>
+                        </div>
+                    </div>
+
+                    <!-- Lista de Tarjetas de Consejos -->
+                    <div class="comments-list" id="consejosList">
+                        <!-- Se insertan dinámicamente con JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Módulo de Inicio de Sesión y Acceso al Registro de Datos -->
+    <section class="access-section" id="iniciar-sesion">
         <div class="access-wrapper">
             <div class="access-content">
-                <h2>Ingresa a tu panel de Control Apícola</h2>
+                <div class="hero-kicker" style="background: rgba(254, 240, 138, 0.1); border-color: rgba(254, 240, 138, 0.25); color: #fef08a; display: inline-flex; margin-bottom: 16px;">
+                    <span>🔐</span>
+                    <span>Acceso al Sistema</span>
+                </div>
+                <h2>Inicia sesión para registrar tus colmenas y cosechas</h2>
                 <p>
-                    Accede a tus registros históricos de cosechas, actualiza tus inspecciones y lleva la contabilidad transparente de tus colmenas.
+                    Ingresa a tu panel privado de Control Apícola: lleva el registro diario de colmenas activas, miel cosechada (kg), costos operativos y balance neto automático en pesos (COP).
                 </p>
 
                 <div class="access-perks">
                     <div class="perk-item">
                         <span>✓</span>
-                        <p>Almacenamiento seguro y privado en tu navegador local.</p>
+                        <p><strong>Formulario de registro en campo:</strong> conteo de colmenas, pérdidas, kilos de miel y gastos.</p>
                     </div>
                     <div class="perk-item">
                         <span>✓</span>
-                        <p>Acceso inmediato sin dependencias complicadas ni demoras.</p>
+                        <p><strong>Historial financiero en tiempo real:</strong> cálculo automático de ingresos brutos y ganancia neta.</p>
                     </div>
                     <div class="perk-item">
                         <span>✓</span>
-                        <p>Reportes claros de rendimiento de miel y balances en COP.</p>
+                        <p><strong>Almacenamiento seguro en tu navegador:</strong> tus registros se guardan localmente para mayor privacidad.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Auth Form Card -->
+            <!-- Auth Form Card Unificado -->
             <div class="auth-card">
                 <div class="auth-card-head">
-                    <h3 id="authTitle">Iniciar Sesión</h3>
-                    <p id="authSubtitle">Ingresa tus datos de apicultor para acceder al sistema.</p>
+                    <h3 id="authTitle">🔑 Iniciar Sesión con Cuenta Única</h3>
+                    <p id="authSubtitle">Ingresa con tus credenciales de apicultor o crea tu cuenta única completando los datos.</p>
                 </div>
 
-                <div class="auth-toggle">
-                    <button type="button" id="tabLogin" class="active" onclick="cambiarModoAuth('login')">
-                        Iniciar Sesión
-                    </button>
-                    <button type="button" id="tabRegister" onclick="cambiarModoAuth('register')">
-                        Registrar Apiario
-                    </button>
-                </div>
-
-                <form id="authForm" onsubmit="event.preventDefault(); procesarAuth();">
+                <!-- Formulario Unificado de Cuenta Única & Inicio de Sesión -->
+                <form id="authUnificadoForm" onsubmit="event.preventDefault(); procesarAccesoUnico();">
                     <div class="form-group">
-                        <label for="nombre">Nombre Completo del Apicultor</label>
+                        <label for="authNombre">Nombre Completo del Apicultor *</label>
                         <input
                             type="text"
-                            id="nombre"
+                            id="authNombre"
                             placeholder="Ej: Carlos Mendoza"
                             autocomplete="name"
                             required
@@ -388,34 +524,61 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="cedula">Cédula o Documento de Identidad</label>
+                        <label for="authEmail">Correo Electrónico Único *</label>
                         <input
-                            type="text"
-                            id="cedula"
-                            placeholder="Ej: 1098765432"
-                            autocomplete="username"
+                            type="email"
+                            id="authEmail"
+                            placeholder="tu.correo@ejemplo.com"
+                            autocomplete="email"
                             required
                         >
+                        <span class="field-hint info">🔒 Cada apicultor tiene un correo único para proteger el acceso a sus registros.</span>
                     </div>
 
-                    <div class="form-group" id="groupApiario" style="display: none;">
-                        <label for="apiario">Nombre del Apiario o Finca (Opcional)</label>
+                    <div class="form-group">
+                        <label for="authClave">Clave / Contraseña *</label>
+                        <div class="password-input-wrap">
+                            <input
+                                type="password"
+                                id="authClave"
+                                placeholder="Ingresa tu clave de acceso (mínimo 6 caracteres)"
+                                autocomplete="current-password"
+                                minlength="6"
+                                required
+                            >
+                            <button type="button" class="btn-toggle-password" onclick="toggleVisibilidadClave('authClave', this)" title="Ver u ocultar clave">
+                                👁️
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="authApiario">Nombre del Apiario o Finca (Opcional)</label>
                         <input
                             type="text"
-                            id="apiario"
+                            id="authApiario"
                             placeholder="Ej: Apiario La Colmena Dorada"
                         >
                     </div>
 
                     <div class="form-group">
-                        <label for="edad">Edad del Apicultor</label>
+                        <label for="authCedula">Cédula o Documento de Identidad (Opcional)</label>
+                        <input
+                            type="text"
+                            id="authCedula"
+                            placeholder="Ej: 1098765432"
+                            autocomplete="username"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="authEdad">Edad del Apicultor (Opcional)</label>
                         <input
                             type="number"
-                            id="edad"
+                            id="authEdad"
                             min="1"
                             max="120"
                             placeholder="Ej: 38"
-                            required
                         >
                     </div>
 
@@ -426,21 +589,23 @@
                         </label>
                     </div>
 
-                    <button type="submit" id="btnSubmitAuth" class="btn-primary">
-                        <span>🐝 Entrar al Sistema Apícola</span>
-                    </button>
+                    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 14px;">
+                        <button type="submit" id="btnSubmitAuth" class="btn-primary">
+                            <span>🐝 Iniciar Sesión / Entrar con mi Cuenta</span>
+                        </button>
 
-                    <button type="button" class="btn-demo" onclick="llenarAccesoDemo()">
-                        ⚡ Entrar con cuenta de demostración
-                    </button>
+                        <button type="button" class="btn-demo" onclick="llenarAccesoDemo()">
+                            ⚡ Probar con cuenta de demostración (Carlos Mendoza)
+                        </button>
+                    </div>
 
-                    <div id="loginMensaje" class="message-box"></div>
+                    <div id="authMensaje" class="message-box"></div>
                 </form>
             </div>
         </div>
     </section>
 
-    <!-- 6. Footer -->
+    <!-- 7. Footer -->
     <footer class="landing-footer">
         <div class="footer-inner">
             <div class="footer-brand">
@@ -458,7 +623,8 @@
                 <a href="#hero">Inicio</a>
                 <a href="#caracteristicas">Características</a>
                 <a href="#calculadora">Calculadora</a>
-                <a href="#acceso">Acceso</a>
+                <a href="#consejos">Consejos</a>
+                <a href="#iniciar-sesion" onclick="abrirModoAuth()">Iniciar Sesión / Cuenta Única</a>
             </div>
 
             <div>
@@ -486,9 +652,12 @@
         </div>
 
         <div class="navbar-user-section">
+            <button type="button" class="btn-back-landing" onclick="volverALanding()">
+                <span>🏡 Ver Landing & Consejos</span>
+            </button>
             <div class="user-badge">
                 <div class="user-name" id="navbarUsuarioNombre">Apicultor</div>
-                <div class="user-meta" id="navbarUsuarioMeta">Cédula: -</div>
+                <div class="user-meta" id="navbarUsuarioMeta">apicultor@correo.com</div>
             </div>
 
             <button class="btn-logout" onclick="cerrarSesion()">
@@ -503,6 +672,7 @@
             <div class="welcome-info">
                 <h3>Bienvenido/a, <span id="usuarioNombre"></span> 👋</h3>
                 <p id="usuarioApiarioTexto">Aquí puedes administrar las colmenas y cosechas de tu apiario.</p>
+                <div id="bannerBadgeCuenta" class="banner-badge demo">⚡ Cuenta de Demostración · Datos aislados</div>
             </div>
             <div class="welcome-meta" id="fechaActual">
                 <!-- Se llena dinámicamente con JS -->
@@ -623,11 +793,23 @@
 
         <!-- Historial de Registros -->
         <div class="card-section">
-            <div class="section-header">
-                <h3>📊 Historial de Registros</h3>
-                <span id="contadorRegistros" style="font-size: 13px; color: var(--color-text-muted);">
-                    0 registros registrados
-                </span>
+            <div class="section-header" style="flex-wrap: wrap; gap: 12px;">
+                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                    <h3>📊 Historial de Registros</h3>
+                    <span id="badgeTipoCuenta" class="badge-tipo-cuenta demo">Demo</span>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                    <span id="contadorRegistros" style="font-size: 13px; color: var(--color-text-muted);">
+                        0 registros guardados
+                    </span>
+                    <button type="button" id="btnRestablecerDemo" class="btn-secondary-action" onclick="restablecerDatosDemo()" style="display: none;" title="Restablecer los 2 registros iniciales de la cuenta demo">
+                        🔄 Restablecer datos demo
+                    </button>
+                    <button type="button" id="btnVaciarHistorial" class="btn-danger-action" onclick="pedirConfirmacionVaciar()" style="display: none;" title="Eliminar todos los registros de esta cuenta">
+                        🗑️ Vaciar todo
+                    </button>
+                </div>
             </div>
 
             <div class="table-wrapper">
@@ -657,15 +839,128 @@
         </div>
     </main>
 
+    <!-- Modal In-App para Confirmación de Eliminación -->
+    <div id="modalConfirmacion" class="modal-backdrop" style="display: none;" onclick="cerrarModalConfirmacion(event)">
+        <div class="modal-dialog" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <div class="modal-icon-wrap" id="modalIcono">🗑️</div>
+                <div>
+                    <h4 id="modalTitulo" class="modal-title">¿Eliminar este registro?</h4>
+                    <p id="modalSubtitulo" class="modal-desc">Esta acción quitará el registro del historial de tu apiario.</p>
+                </div>
+                <button type="button" class="modal-btn-close" onclick="cerrarModalConfirmacion()" aria-label="Cerrar ventana modal">&times;</button>
+            </div>
+            <div class="modal-body" id="modalCuerpoDetalle">
+                <!-- Se llena dinámicamente con JS -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-modal-cancel" onclick="cerrarModalConfirmacion()">Cancelar</button>
+                <button type="button" class="btn-modal-confirm-delete" id="btnModalConfirmarAccion" onclick="ejecutarAccionConfirmada()">
+                    🗑️ Confirmar Eliminación
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast flotante de notificación (con opción Deshacer) -->
+    <div id="toastNotificacion" class="toast-floating" style="display: none;">
+        <span id="toastIcono">✅</span>
+        <span id="toastMensaje">Registro eliminado exitosamente.</span>
+        <button type="button" id="toastBtnDeshacer" class="toast-btn-undo" onclick="deshacerUltimaEliminacion()" style="display: none;">
+            ↺ Deshacer
+        </button>
+    </div>
+
 </div>
 
 <!-- ==========================================================================
      LÓGICA JAVASCRIPT DE LA APLICACIÓN
      ========================================================================== -->
 <script>
-// Estado de usuario y registros en localStorage
+// Estado de usuario y registros con aislamiento por cuenta
+const EMAIL_DEMO = "carlos.mendoza@apicola.com";
+
+const REGISTROS_DEMO_INICIALES = [
+    {
+        fecha: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toLocaleDateString("es-CO"),
+        colmenas: 24,
+        perdidas: 1,
+        miel: 68.5,
+        precio: 20000,
+        ingresos: 1370000,
+        gastos: 280000,
+        ganancia: 1090000
+    },
+    {
+        fecha: new Date().toLocaleDateString("es-CO"),
+        colmenas: 30,
+        perdidas: 0,
+        miel: 95.0,
+        precio: 21000,
+        ingresos: 1995000,
+        gastos: 350000,
+        ganancia: 1645000
+    }
+];
+
 let usuario = JSON.parse(localStorage.getItem("usuarioApicola")) || null;
-let registros = JSON.parse(localStorage.getItem("registrosApicola")) || [];
+let registros = [];
+
+// Variables para el control de eliminación y deshacer (Undo)
+let accionConfirmadaCallback = null;
+let ultimoRegistroEliminado = null;
+let timeoutToast = null;
+
+// Funciones de aislamiento de datos por cuenta única vs demostración
+function obtenerClaveRegistros(email) {
+    if (!email) return "registrosApicola_demo_carlos";
+    const normalizado = email.trim().toLowerCase();
+    if (normalizado === EMAIL_DEMO) {
+        return "registrosApicola_demo_carlos";
+    }
+    return `registrosApicola_usuario_${normalizado}`;
+}
+
+function cargarRegistrosDeUsuario(email) {
+    const key = obtenerClaveRegistros(email);
+    try {
+        const guardados = localStorage.getItem(key);
+        if (guardados !== null) {
+            const parsed = JSON.parse(guardados);
+            if (Array.isArray(parsed)) {
+                return parsed;
+            }
+        }
+    } catch (e) {
+        console.error("Error al cargar registros del usuario:", e);
+    }
+
+    // Si es la cuenta de demostración (Carlos Mendoza) y aún no tiene datos en su clave aislada
+    if (email && email.trim().toLowerCase() === EMAIL_DEMO) {
+        // Migrar datos de la clave antigua compartida si existían
+        const datosViejos = localStorage.getItem("registrosApicola");
+        if (datosViejos) {
+            try {
+                const parsedViejo = JSON.parse(datosViejos);
+                if (Array.isArray(parsedViejo) && parsedViejo.length > 0) {
+                    localStorage.setItem(key, JSON.stringify(parsedViejo));
+                    return parsedViejo;
+                }
+            } catch (e) {}
+        }
+        localStorage.setItem(key, JSON.stringify(REGISTROS_DEMO_INICIALES));
+        return JSON.parse(JSON.stringify(REGISTROS_DEMO_INICIALES));
+    }
+
+    // Para cualquier otra cuenta única, se inicia con un historial nuevo y limpio
+    return [];
+}
+
+function guardarRegistrosActuales() {
+    if (!usuario || !usuario.email) return;
+    const key = obtenerClaveRegistros(usuario.email);
+    localStorage.setItem(key, JSON.stringify(registros));
+}
 
 // Formateador de moneda en pesos colombianos
 function formatoDinero(valor) {
@@ -709,108 +1004,261 @@ function calcularSimulador() {
 // --------------------------------------------------------------------------
 // Lógica de Autenticación & Transición Landing <-> Dashboard
 // --------------------------------------------------------------------------
-function abrirModoAuth(modo) {
-    cambiarModoAuth(modo);
-    const elAcceso = document.getElementById("acceso");
+function irARegistroDatos() {
+    if (usuario && usuario.nombre) {
+        mostrarAplicacion();
+    } else {
+        const elAcceso = document.getElementById("iniciar-sesion") || document.getElementById("acceso");
+        if (elAcceso) {
+            elAcceso.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+}
+
+function entrarDirectoRegistro() {
+    if (!usuario || !usuario.nombre || !usuario.email) {
+        usuario = {
+            nombre: "Carlos Mendoza",
+            email: EMAIL_DEMO,
+            cedula: "1098765432",
+            edad: 38,
+            apiario: "Apiario La Colmena Dorada"
+        };
+        localStorage.setItem("usuarioApicola", JSON.stringify(usuario));
+    }
+    mostrarAplicacion();
+}
+
+function volverALanding() {
+    document.getElementById("app").style.display = "none";
+    document.getElementById("landing").style.display = "block";
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// --------------------------------------------------------------------------
+// Gestión de Cuentas Únicas de Apicultores en LocalStorage
+// --------------------------------------------------------------------------
+const CUENTAS_INICIALES = [
+    {
+        nombre: "Carlos Mendoza",
+        email: "carlos.mendoza@apicola.com",
+        clave: "apicola123",
+        cedula: "1098765432",
+        edad: 38,
+        apiario: "Apiario La Colmena Dorada"
+    },
+    {
+        nombre: "Elena Restrepo",
+        email: "elena.restrepo@apicola.com",
+        clave: "reina2026",
+        cedula: "52890123",
+        edad: 45,
+        apiario: "Apiario Los Arrayanes"
+    }
+];
+
+function obtenerCuentasRegistradas() {
+    try {
+        const guardadas = localStorage.getItem("cuentasApicola");
+        if (guardadas) {
+            const parsed = JSON.parse(guardadas);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+                return parsed;
+            }
+        }
+    } catch (e) {
+        console.error("Error al leer cuentas:", e);
+    }
+    localStorage.setItem("cuentasApicola", JSON.stringify(CUENTAS_INICIALES));
+    return [...CUENTAS_INICIALES];
+}
+
+function guardarCuentasRegistradas(cuentas) {
+    localStorage.setItem("cuentasApicola", JSON.stringify(cuentas));
+}
+
+function toggleVisibilidadClave(inputId, btn) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    if (input.type === "password") {
+        input.type = "text";
+        btn.textContent = "🙈";
+        btn.title = "Ocultar clave";
+    } else {
+        input.type = "password";
+        btn.textContent = "👁️";
+        btn.title = "Ver clave";
+    }
+}
+
+function abrirModoAuth() {
+    const elAcceso = document.getElementById("iniciar-sesion") || document.getElementById("acceso");
     if (elAcceso) {
         elAcceso.scrollIntoView({ behavior: 'smooth' });
     }
 }
 
 function cambiarModoAuth(modo) {
-    const tabLogin = document.getElementById("tabLogin");
-    const tabRegister = document.getElementById("tabRegister");
-    const authTitle = document.getElementById("authTitle");
-    const authSubtitle = document.getElementById("authSubtitle");
-    const groupApiario = document.getElementById("groupApiario");
-    const btnSubmit = document.getElementById("btnSubmitAuth");
-    const mensaje = document.getElementById("loginMensaje");
-
-    mensaje.style.display = "none";
-
-    if (modo === 'register') {
-        tabLogin.classList.remove("active");
-        tabRegister.classList.add("active");
-        authTitle.textContent = "Registrar Nuevo Apiario";
-        authSubtitle.textContent = "Crea el perfil de tu apiario para comenzar a registrar colmenas.";
-        groupApiario.style.display = "block";
-        btnSubmit.innerHTML = "<span>🌱 Registrarse y Entrar</span>";
-    } else {
-        tabRegister.classList.remove("active");
-        tabLogin.classList.add("active");
-        authTitle.textContent = "Iniciar Sesión";
-        authSubtitle.textContent = "Ingresa tus datos de apicultor para acceder al sistema.";
-        groupApiario.style.display = "none";
-        btnSubmit.innerHTML = "<span>🐝 Entrar al Sistema Apícola</span>";
-    }
+    abrirModoAuth();
 }
 
 function llenarAccesoDemo() {
-    document.getElementById("nombre").value = "Carlos Mendoza";
-    document.getElementById("cedula").value = "1098765432";
-    document.getElementById("edad").value = "38";
-    document.getElementById("apiario").value = "Apiario La Colmena Dorada";
+    const inputNombre = document.getElementById("authNombre");
+    const inputEmail = document.getElementById("authEmail");
+    const inputClave = document.getElementById("authClave");
+    const inputApiario = document.getElementById("authApiario");
+    const inputCedula = document.getElementById("authCedula");
+    const inputEdad = document.getElementById("authEdad");
 
-    // Sembrar datos de ejemplo útiles si no hay registros existentes
-    if (!registros || registros.length === 0) {
-        registros = [
-            {
-                fecha: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toLocaleDateString("es-CO"),
-                colmenas: 24,
-                perdidas: 1,
-                miel: 68.5,
-                precio: 20000,
-                ingresos: 1370000,
-                gastos: 280000,
-                ganancia: 1090000
-            },
-            {
-                fecha: new Date().toLocaleDateString("es-CO"),
-                colmenas: 30,
-                perdidas: 0,
-                miel: 95.0,
-                precio: 21000,
-                ingresos: 1995000,
-                gastos: 350000,
-                ganancia: 1645000
-            }
-        ];
-        localStorage.setItem("registrosApicola", JSON.stringify(registros));
+    if (inputNombre) inputNombre.value = "Carlos Mendoza";
+    if (inputEmail) inputEmail.value = "carlos.mendoza@apicola.com";
+    if (inputClave) inputClave.value = "apicola123";
+    if (inputApiario) inputApiario.value = "Apiario La Colmena Dorada";
+    if (inputCedula) inputCedula.value = "1098765432";
+    if (inputEdad) inputEdad.value = "38";
+
+    // Asegurar que exista la cuenta demo en la base de datos
+    const cuentas = obtenerCuentasRegistradas();
+    if (!cuentas.some(c => c.email.toLowerCase() === "carlos.mendoza@apicola.com")) {
+        cuentas.push({
+            nombre: "Carlos Mendoza",
+            email: "carlos.mendoza@apicola.com",
+            clave: "apicola123",
+            cedula: "1098765432",
+            edad: 38,
+            apiario: "Apiario La Colmena Dorada"
+        });
+        guardarCuentasRegistradas(cuentas);
     }
 
-    procesarAuth();
+    procesarAccesoUnico();
 }
 
-function procesarAuth() {
-    const nombre = document.getElementById("nombre").value.trim();
-    const cedula = document.getElementById("cedula").value.trim();
-    const edadVal = document.getElementById("edad").value;
-    const apiario = document.getElementById("apiario").value.trim();
-    const recordar = document.getElementById("recordarSesion").checked;
-    const mensaje = document.getElementById("loginMensaje");
+function procesarAccesoUnico() {
+    const nombreInput = document.getElementById("authNombre");
+    const emailInput = document.getElementById("authEmail");
+    const claveInput = document.getElementById("authClave");
+    const apiarioInput = document.getElementById("authApiario");
+    const cedulaInput = document.getElementById("authCedula");
+    const edadInput = document.getElementById("authEdad");
+    const recordarInput = document.getElementById("recordarSesion");
+    const mensaje = document.getElementById("authMensaje");
 
     mensaje.className = "message-box";
     mensaje.style.display = "none";
 
-    if (!nombre || !cedula || !edadVal) {
+    const nombre = nombreInput ? nombreInput.value.trim() : "";
+    const email = emailInput ? emailInput.value.trim().toLowerCase() : "";
+    const clave = claveInput ? claveInput.value : "";
+    const apiario = apiarioInput ? apiarioInput.value.trim() : "";
+    const cedula = cedulaInput ? cedulaInput.value.trim() : "";
+    const edadVal = edadInput ? edadInput.value : "";
+    const recordar = recordarInput ? recordarInput.checked : true;
+
+    if (!nombre) {
         mensaje.className = "message-box error";
-        mensaje.textContent = "⚠️ Por favor completa los campos requeridos (Nombre, Cédula y Edad).";
+        mensaje.textContent = "⚠️ Por favor ingresa el Nombre Completo del Apicultor.";
+        mensaje.style.display = "block";
         return;
     }
 
-    const edad = Number(edadVal);
-    if (isNaN(edad) || edad < 1 || edad > 120) {
+    if (!email || !clave) {
         mensaje.className = "message-box error";
-        mensaje.textContent = "⚠️ Por favor ingresa una edad válida entre 1 y 120 años.";
+        mensaje.textContent = "⚠️ Por favor ingresa el Correo Electrónico y la Clave de tu cuenta única.";
+        mensaje.style.display = "block";
         return;
     }
 
-    usuario = {
-        nombre: nombre,
-        cedula: cedula,
-        edad: edad,
-        apiario: apiario || "Apiario Familiar"
-    };
+    const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!emailValido) {
+        mensaje.className = "message-box error";
+        mensaje.textContent = "⚠️ Por favor ingresa un formato de correo electrónico válido (ejemplo: apicultor@apicola.com).";
+        mensaje.style.display = "block";
+        return;
+    }
+
+    if (clave.length < 6) {
+        mensaje.className = "message-box error";
+        mensaje.textContent = "⚠️ La clave de acceso debe contener al menos 6 caracteres.";
+        mensaje.style.display = "block";
+        return;
+    }
+
+    let edad = 35;
+    if (edadVal) {
+        const numEdad = Number(edadVal);
+        if (isNaN(numEdad) || numEdad < 1 || numEdad > 120) {
+            mensaje.className = "message-box error";
+            mensaje.textContent = "⚠️ Ingresa una edad válida entre 1 y 120 años.";
+            mensaje.style.display = "block";
+            return;
+        }
+        edad = numEdad;
+    }
+
+    const cuentas = obtenerCuentasRegistradas();
+    const cuentaExistente = cuentas.find(c => c.email.toLowerCase() === email);
+
+    if (cuentaExistente) {
+        // El correo ya existe: validar que la clave única coincida
+        if (cuentaExistente.clave !== clave) {
+            mensaje.className = "message-box error";
+            mensaje.textContent = "⚠️ La clave ingresada no coincide con la clave única registrada para este correo. Por favor verifícala.";
+            mensaje.style.display = "block";
+            return;
+        }
+
+        // Si el usuario actualizó su nombre o apiario en el formulario, actualizamos la cuenta
+        if (nombre && nombre !== cuentaExistente.nombre) {
+            cuentaExistente.nombre = nombre;
+        }
+        if (apiario && apiario !== cuentaExistente.apiario) {
+            cuentaExistente.apiario = apiario;
+        }
+        if (cedula && cedula !== cuentaExistente.cedula) {
+            cuentaExistente.cedula = cedula;
+        }
+        if (edadVal) {
+            cuentaExistente.edad = edad;
+        }
+        guardarCuentasRegistradas(cuentas);
+
+        usuario = {
+            nombre: cuentaExistente.nombre,
+            email: cuentaExistente.email,
+            cedula: cuentaExistente.cedula || "No registrada",
+            edad: cuentaExistente.edad || 35,
+            apiario: cuentaExistente.apiario || "Apiario Familiar"
+        };
+
+        mensaje.className = "message-box success";
+        mensaje.textContent = `✅ ¡Sesión iniciada con éxito! Bienvenido/a nuevamente, ${usuario.nombre}.`;
+    } else {
+        // Nueva cuenta única: registrarla en el sistema
+        const nuevaCuenta = {
+            nombre: nombre,
+            email: email,
+            clave: clave,
+            cedula: cedula || "Sin documento",
+            edad: edad,
+            apiario: apiario || ("Apiario " + nombre),
+            fechaCreacion: new Date().toISOString()
+        };
+
+        cuentas.push(nuevaCuenta);
+        guardarCuentasRegistradas(cuentas);
+
+        usuario = {
+            nombre: nuevaCuenta.nombre,
+            email: nuevaCuenta.email,
+            cedula: nuevaCuenta.cedula,
+            edad: nuevaCuenta.edad,
+            apiario: nuevaCuenta.apiario
+        };
+
+        mensaje.className = "message-box success";
+        mensaje.textContent = `✅ ¡Cuenta única creada e iniciada con éxito! Bienvenido/a a Control Apícola, ${usuario.nombre}.`;
+    }
 
     if (recordar) {
         localStorage.setItem("usuarioApicola", JSON.stringify(usuario));
@@ -818,16 +1266,15 @@ function procesarAuth() {
         sessionStorage.setItem("usuarioApicola", JSON.stringify(usuario));
     }
 
-    mensaje.className = "message-box success";
-    mensaje.textContent = "✅ ¡Acceso verificado! Ingresando al panel de control...";
+    mensaje.style.display = "block";
 
     setTimeout(() => {
         mostrarAplicacion();
-    }, 350);
+    }, 400);
 }
 
 function iniciarSesion() {
-    procesarAuth();
+    procesarAccesoUnico();
 }
 
 function mostrarAplicacion() {
@@ -835,14 +1282,61 @@ function mostrarAplicacion() {
     document.getElementById("app").style.display = "block";
     window.scrollTo({ top: 0, behavior: 'instant' });
 
+    if (!usuario) {
+        usuario = {
+            nombre: "Carlos Mendoza",
+            email: EMAIL_DEMO,
+            cedula: "1098765432",
+            edad: 38,
+            apiario: "Apiario La Colmena Dorada"
+        };
+    }
+
+    const esDemo = usuario.email && usuario.email.toLowerCase() === EMAIL_DEMO;
+
+    // Cargar los registros aislados de esta cuenta específica
+    registros = cargarRegistrosDeUsuario(usuario.email);
+
     // Información del usuario en navbar y banner
     document.getElementById("usuarioNombre").textContent = usuario.nombre;
     document.getElementById("navbarUsuarioNombre").textContent = usuario.nombre;
-    document.getElementById("navbarUsuarioMeta").textContent = `Cédula: ${usuario.cedula}`;
+    document.getElementById("navbarUsuarioMeta").textContent = usuario.email ? `✉️ ${usuario.email}` : `Cédula: ${usuario.cedula}`;
+
+    const bannerBadge = document.getElementById("bannerBadgeCuenta");
+    const badgeHistorial = document.getElementById("badgeTipoCuenta");
+    const btnRestablecer = document.getElementById("btnRestablecerDemo");
+
+    if (esDemo) {
+        if (bannerBadge) {
+            bannerBadge.className = "banner-badge demo";
+            bannerBadge.innerHTML = "⚡ Cuenta de Demostración · Datos de prueba aislados";
+            bannerBadge.style.display = "inline-flex";
+        }
+        if (badgeHistorial) {
+            badgeHistorial.className = "badge-tipo-cuenta demo";
+            badgeHistorial.textContent = "Datos Demo";
+        }
+        if (btnRestablecer) {
+            btnRestablecer.style.display = "inline-flex";
+        }
+    } else {
+        if (bannerBadge) {
+            bannerBadge.className = "banner-badge personal";
+            bannerBadge.innerHTML = "🔒 Cuenta Única Personal · Datos privados independientes";
+            bannerBadge.style.display = "inline-flex";
+        }
+        if (badgeHistorial) {
+            badgeHistorial.className = "badge-tipo-cuenta personal";
+            badgeHistorial.textContent = "Cuenta Única";
+        }
+        if (btnRestablecer) {
+            btnRestablecer.style.display = "none";
+        }
+    }
 
     if (usuario.apiario) {
         document.getElementById("usuarioApiarioTexto").textContent = 
-            `Administración de: ${usuario.apiario} · ${usuario.edad} años`;
+            `Administración de: ${usuario.apiario} · ${usuario.email}`;
     }
 
     // Fecha actual formateada
@@ -857,13 +1351,19 @@ function cerrarSesion() {
     localStorage.removeItem("usuarioApicola");
     sessionStorage.removeItem("usuarioApicola");
     usuario = null;
+    registros = [];
 
     document.getElementById("app").style.display = "none";
     document.getElementById("landing").style.display = "block";
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    const mensaje = document.getElementById("loginMensaje");
-    if (mensaje) mensaje.style.display = "none";
+    const mensajeAuth = document.getElementById("authMensaje");
+    if (mensajeAuth) mensajeAuth.style.display = "none";
+
+    const emailInput = document.getElementById("authEmail");
+    if (emailInput) emailInput.value = "";
+    const claveInput = document.getElementById("authClave");
+    if (claveInput) claveInput.value = "";
 }
 
 // --------------------------------------------------------------------------
@@ -913,11 +1413,12 @@ function guardarRegistro() {
         ganancia: ganancia
     };
 
+    // Agregar registro y guardar en el almacenamiento aislado del usuario
     registros.unshift(nuevoRegistro);
-    localStorage.setItem("registrosApicola", JSON.stringify(registros));
+    guardarRegistrosActuales();
 
     mensaje.className = "message-box success";
-    mensaje.textContent = "✅ Registro guardado exitosamente en el historial.";
+    mensaje.textContent = "✅ Registro guardado exitosamente en tu historial.";
 
     // Limpiar campos
     document.getElementById("colmenas").value = "";
@@ -937,12 +1438,14 @@ function mostrarRegistros() {
     const tabla = document.getElementById("tablaRegistros");
     const emptyState = document.getElementById("emptyState");
     const contador = document.getElementById("contadorRegistros");
+    const btnVaciar = document.getElementById("btnVaciarHistorial");
 
     tabla.innerHTML = "";
 
     if (!registros || registros.length === 0) {
         emptyState.style.display = "block";
         contador.textContent = "0 registros guardados";
+        if (btnVaciar) btnVaciar.style.display = "none";
         document.getElementById("totalColmenas").textContent = "0";
         document.getElementById("totalMiel").textContent = "0 kg";
         document.getElementById("totalPerdidas").textContent = "0";
@@ -951,6 +1454,7 @@ function mostrarRegistros() {
     }
 
     emptyState.style.display = "none";
+    if (btnVaciar) btnVaciar.style.display = "inline-flex";
     contador.textContent = `${registros.length} ${registros.length === 1 ? 'registro guardado' : 'registros guardados'}`;
 
     let totalColmenas = 0;
@@ -977,7 +1481,7 @@ function mostrarRegistros() {
             <td class="num">${formatoDinero(reg.gastos)}</td>
             <td class="num ${gananciaClase}">${formatoDinero(reg.ganancia)}</td>
             <td style="text-align: center;">
-                <button class="btn-delete-row" onclick="eliminarRegistro(${index})">
+                <button type="button" class="btn-delete-row" onclick="eliminarRegistro(${index})" title="Eliminar este registro">
                     🗑️ Eliminar
                 </button>
             </td>
@@ -992,12 +1496,483 @@ function mostrarRegistros() {
     document.getElementById("totalGanancia").textContent = formatoDinero(totalGanancia);
 }
 
+// --------------------------------------------------------------------------
+// Lógica de Eliminación de Registros (Modal In-App sin bloqueo de navegador)
+// --------------------------------------------------------------------------
 function eliminarRegistro(index) {
-    if (confirm("¿Estás seguro de que deseas eliminar este registro del historial?")) {
-        registros.splice(index, 1);
-        localStorage.setItem("registrosApicola", JSON.stringify(registros));
+    const reg = registros[index];
+    if (!reg) return;
+
+    const modal = document.getElementById("modalConfirmacion");
+    const icono = document.getElementById("modalIcono");
+    const titulo = document.getElementById("modalTitulo");
+    const subtitulo = document.getElementById("modalSubtitulo");
+    const cuerpo = document.getElementById("modalCuerpoDetalle");
+    const btnConfirmar = document.getElementById("btnModalConfirmarAccion");
+
+    if (!modal) return;
+
+    icono.textContent = "🗑️";
+    icono.style.background = "#fee2e2";
+    icono.style.color = "#ef4444";
+    titulo.textContent = "¿Eliminar este registro?";
+    subtitulo.textContent = "Esta acción quitará el registro del historial de tu apiario.";
+
+    cuerpo.innerHTML = `
+        <div class="modal-detail-box">
+            <div class="modal-detail-item">
+                <span class="modal-detail-label">Fecha</span>
+                <span class="modal-detail-val">${reg.fecha}</span>
+            </div>
+            <div class="modal-detail-item">
+                <span class="modal-detail-label">Colmenas</span>
+                <span class="modal-detail-val">${reg.colmenas} colmenas (${reg.perdidas} pérdidas)</span>
+            </div>
+            <div class="modal-detail-item">
+                <span class="modal-detail-label">Miel Cosechada</span>
+                <span class="modal-detail-val">${Number(reg.miel).toFixed(2)} kg</span>
+            </div>
+            <div class="modal-detail-item">
+                <span class="modal-detail-label">Ganancia</span>
+                <span class="modal-detail-val" style="color: ${reg.ganancia >= 0 ? '#10b981' : '#ef4444'};">
+                    ${formatoDinero(reg.ganancia)}
+                </span>
+            </div>
+        </div>
+    `;
+
+    btnConfirmar.textContent = "🗑️ Sí, Eliminar Registro";
+    btnConfirmar.className = "btn-modal-confirm-delete";
+
+    accionConfirmadaCallback = function() {
+        const [eliminado] = registros.splice(index, 1);
+        ultimoRegistroEliminado = { item: eliminado, index: index };
+        guardarRegistrosActuales();
         mostrarRegistros();
+        cerrarModalConfirmacion();
+        mostrarToastNotificacion(`🗑️ Registro del ${eliminado.fecha} eliminado`, true);
+    };
+
+    modal.style.display = "flex";
+}
+
+function pedirConfirmacionVaciar() {
+    if (!registros || registros.length === 0) return;
+
+    const modal = document.getElementById("modalConfirmacion");
+    const icono = document.getElementById("modalIcono");
+    const titulo = document.getElementById("modalTitulo");
+    const subtitulo = document.getElementById("modalSubtitulo");
+    const cuerpo = document.getElementById("modalCuerpoDetalle");
+    const btnConfirmar = document.getElementById("btnModalConfirmarAccion");
+
+    if (!modal) return;
+
+    const esDemo = usuario && usuario.email && usuario.email.toLowerCase() === EMAIL_DEMO;
+
+    icono.textContent = "⚠️";
+    icono.style.background = "#fee2e2";
+    icono.style.color = "#dc2626";
+    titulo.textContent = "¿Eliminar todos los registros?";
+    subtitulo.textContent = esDemo 
+        ? "Se borrarán todos los registros de la cuenta demo de prueba. Puedes restablecerlos cuando desees con el botón 'Restablecer demo'."
+        : "Se eliminarán permanentemente todos los registros guardados en tu cuenta única.";
+
+    cuerpo.innerHTML = `
+        <div style="background: #fff1f2; border: 1px solid #fecdd3; border-radius: 8px; padding: 12px; font-size: 13px; color: #9f1239; line-height: 1.5;">
+            ⚠️ Tienes actualmente <strong>${registros.length}</strong> registro(s) guardados. Esta acción dejará tu historial en blanco.
+        </div>
+    `;
+
+    btnConfirmar.textContent = "🗑️ Sí, Vaciar Todo el Historial";
+    btnConfirmar.className = "btn-modal-confirm-delete";
+
+    accionConfirmadaCallback = function() {
+        registros = [];
+        guardarRegistrosActuales();
+        mostrarRegistros();
+        cerrarModalConfirmacion();
+        mostrarToastNotificacion("🗑️ Historial vaciado correctamente", false);
+    };
+
+    modal.style.display = "flex";
+}
+
+function restablecerDatosDemo() {
+    if (!usuario || !usuario.email || usuario.email.toLowerCase() !== EMAIL_DEMO) return;
+    registros = JSON.parse(JSON.stringify(REGISTROS_DEMO_INICIALES));
+    guardarRegistrosActuales();
+    mostrarRegistros();
+    mostrarToastNotificacion("🔄 Registros de demostración restablecidos", false);
+}
+
+function cerrarModalConfirmacion(event) {
+    if (event && event.target && event.target.id !== "modalConfirmacion") {
+        return;
     }
+    const modal = document.getElementById("modalConfirmacion");
+    if (modal) modal.style.display = "none";
+    accionConfirmadaCallback = null;
+}
+
+function ejecutarAccionConfirmada() {
+    if (typeof accionConfirmadaCallback === "function") {
+        accionConfirmadaCallback();
+    }
+}
+
+function mostrarToastNotificacion(mensaje, mostrarDeshacer = false) {
+    const toast = document.getElementById("toastNotificacion");
+    const texto = document.getElementById("toastMensaje");
+    const btnUndo = document.getElementById("toastBtnDeshacer");
+
+    if (!toast) return;
+
+    if (timeoutToast) clearTimeout(timeoutToast);
+
+    texto.textContent = mensaje;
+    if (btnUndo) {
+        btnUndo.style.display = mostrarDeshacer ? "inline-block" : "none";
+    }
+    toast.style.display = "flex";
+
+    timeoutToast = setTimeout(() => {
+        toast.style.display = "none";
+    }, 5500);
+}
+
+function deshacerUltimaEliminacion() {
+    if (!ultimoRegistroEliminado) return;
+    const { item, index } = ultimoRegistroEliminado;
+    registros.splice(index, 0, item);
+    ultimoRegistroEliminado = null;
+    guardarRegistrosActuales();
+    mostrarRegistros();
+
+    const toast = document.getElementById("toastNotificacion");
+    if (toast) toast.style.display = "none";
+
+    mostrarToastNotificacion("↺ Registro restaurado exitosamente", false);
+}
+
+// Atajo de teclado: presionar tecla Escape para cerrar el modal
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") {
+        cerrarModalConfirmacion();
+    }
+});
+
+// --------------------------------------------------------------------------
+// Lógica de Consejos y Métodos para el Cuidado de Colmenas
+// --------------------------------------------------------------------------
+let consejos = [];
+let filtroConsejoActual = 'Todos';
+
+const CONSEJOS_INICIALES = [
+    {
+        id: 1,
+        nombre: "Carlos Mendoza",
+        ubicacion: "Apiario El Roble · Boyacá",
+        categoria: "Sanidad y Varroa",
+        metodo: "Método Orgánico",
+        rating: 5,
+        texto: "Para el control de Varroa sin químicos residuales, combinamos pisos sanitarios de malla (fondo antivarroa) con sublimación de ácido oxálico puro cuando no hay alzas melarias. Las varroas que caen por desparasitación natural no pueden volver a trepar gracias a la rejilla. Este método redujo la mortalidad en época de frío a menos del 3%.",
+        fecha: "Hace 2 días",
+        likes: 26,
+        likedByUser: false
+    },
+    {
+        id: 2,
+        nombre: "Doña Elena Restrepo",
+        ubicacion: "Apiario Los Arrayanes · Quindío",
+        categoria: "Nutrición y Alimentación",
+        metodo: "Técnica de Estimulación",
+        rating: 5,
+        texto: "En semanas previas a la floración principal, preparamos torta proteica casera con harina de soya desgrasada (15%), polen propio congelado (15%) y azúcar micropulverizada amasada con jarabe de azúcar 2:1. La colocamos directamente sobre los cabezales envuelta en papel parafinado con hendiduras. La reina responde duplicando el área de postura en menos de 10 días.",
+        fecha: "Hace 4 días",
+        likes: 31,
+        likedByUser: false
+    },
+    {
+        id: 3,
+        nombre: "Javier Ramos",
+        ubicacion: "Finca La Reina · Santander",
+        categoria: "Piqueras y Manejo",
+        metodo: "Control Físico y Sanitario",
+        rating: 5,
+        texto: "Para proteger colmenas y núcleos de hormigas bravas y escarabajos de la colmena (Aethina tumida), montamos los bancos sobre postes cuyas bases reposan en latas llenas de aceite comestible reciclado. Además, reducimos la piquera con listones de madera a solo 3 cm en enjambres jóvenes para que las guardianas defiendan con facilidad la entrada contra pillajes.",
+        fecha: "Hace 1 semana",
+        likes: 19,
+        likedByUser: false
+    },
+    {
+        id: 4,
+        nombre: "Marta Lucía Gómez",
+        ubicacion: "Apicultura de Montaña · Antioquia",
+        categoria: "Clima y Protección",
+        metodo: "Manejo Tradicional de Campo",
+        rating: 5,
+        texto: "En zonas de alta precipitación, el mayor enemigo es la humedad condensada en el techo que gotea sobre el nido. Nuestra técnica consiste en dar una inclinación hacia adelante de 2 a 3 cm a toda la colmena, e instalar entretapa de madera con malla de ventilación pequeña y cubierta de costal de fique seco. El aire circula sin crear corrientes frías y los panales jamás generan hongos.",
+        fecha: "Hace 1 semana",
+        likes: 22,
+        likedByUser: false
+    },
+    {
+        id: 5,
+        nombre: "Don Gustavo Ramírez",
+        ubicacion: "Apiario El Prado · Cundinamarca",
+        categoria: "Reinas y Enjambres",
+        metodo: "Método Preventivo",
+        rating: 5,
+        texto: "Para evitar la enjambrazón natural cuando la colmena está a tope de población, aplicamos la técnica de división temprana: trasladamos la reina fundadora con dos bastidores de cría sellada, un bastidor de reservas y nodrizas a un núcleo nuevo a 3 metros. En la colmena madre seleccionamos la mejor celda real operculada. De esta forma duplicamos colmenas y no perdemos enjambres en las copas de los árboles.",
+        fecha: "Hace 2 semanas",
+        likes: 28,
+        likedByUser: false
+    }
+];
+
+function inicializarConsejos() {
+    try {
+        const guardados = localStorage.getItem("consejosApicola");
+        if (guardados) {
+            consejos = JSON.parse(guardados);
+        } else {
+            consejos = [...CONSEJOS_INICIALES];
+            localStorage.setItem("consejosApicola", JSON.stringify(consejos));
+        }
+    } catch (e) {
+        consejos = [...CONSEJOS_INICIALES];
+    }
+
+    const textarea = document.getElementById("consejoTexto");
+    if (textarea) {
+        textarea.addEventListener("input", () => {
+            const count = textarea.value.length;
+            const counter = document.getElementById("charCount");
+            if (counter) counter.textContent = `${count} / 600 caracteres`;
+            if (count > 600) {
+                textarea.value = textarea.value.slice(0, 600);
+            }
+        });
+    }
+
+    renderizarConsejos();
+}
+
+// Compatibilidad por si se llamaba antes
+function inicializarComentarios() {
+    inicializarConsejos();
+}
+
+function seleccionarEstrellas(valor) {
+    const ratingInput = document.getElementById("consejoRating") || document.getElementById("comentarioRating");
+    if (ratingInput) ratingInput.value = valor;
+
+    const estrellas = document.querySelectorAll("#starRatingSelector .star-btn");
+    estrellas.forEach((star) => {
+        const starVal = Number(star.getAttribute("data-value"));
+        if (starVal <= valor) {
+            star.classList.add("active");
+        } else {
+            star.classList.remove("active");
+        }
+    });
+
+    const labels = {
+        1: "1 de 5 estrellas (Poco Efectivo)",
+        2: "2 de 5 estrellas (Regular)",
+        3: "3 de 5 estrellas (Bueno / Aceptable)",
+        4: "4 de 5 estrellas (Muy Efectivo)",
+        5: "5 de 5 estrellas (Altamente Recomendado)"
+    };
+    const labelElem = document.getElementById("starRatingLabel");
+    if (labelElem) labelElem.textContent = labels[valor] || `${valor} de 5 estrellas`;
+}
+
+function filtrarConsejos(categoria, btnElement) {
+    filtroConsejoActual = categoria;
+    const buttons = document.querySelectorAll("#consejoFilters .filter-pill");
+    buttons.forEach(b => b.classList.remove("active"));
+    if (btnElement) btnElement.classList.add("active");
+
+    renderizarConsejos();
+}
+
+function filtrarComentarios(cat, btn) {
+    filtrarConsejos(cat, btn);
+}
+
+function darMeGustaConsejo(id) {
+    const c = consejos.find(item => item.id === id);
+    if (c) {
+        if (!c.likedByUser) {
+            c.likes = (c.likes || 0) + 1;
+            c.likedByUser = true;
+        } else {
+            c.likes = Math.max(0, (c.likes || 1) - 1);
+            c.likedByUser = false;
+        }
+        localStorage.setItem("consejosApicola", JSON.stringify(consejos));
+        renderizarConsejos();
+    }
+}
+
+function darMeGusta(id) {
+    darMeGustaConsejo(id);
+}
+
+function publicarConsejo() {
+    const nombreInput = document.getElementById("consejoNombre");
+    const ubicacionInput = document.getElementById("consejoUbicacion");
+    const categoriaSelect = document.getElementById("consejoCategoria");
+    const metodoSelect = document.getElementById("consejoMetodo");
+    const ratingInput = document.getElementById("consejoRating");
+    const textoInput = document.getElementById("consejoTexto");
+    const mensaje = document.getElementById("consejoMensaje");
+
+    const nombre = nombreInput ? nombreInput.value.trim() : "";
+    const ubicacion = ubicacionInput ? ubicacionInput.value.trim() : "";
+    const categoria = categoriaSelect ? categoriaSelect.value : "Sanidad y Varroa";
+    const metodo = metodoSelect ? metodoSelect.value : "Método Práctico";
+    const rating = ratingInput ? (Number(ratingInput.value) || 5) : 5;
+    const texto = textoInput ? textoInput.value.trim() : "";
+
+    mensaje.className = "message-box";
+    mensaje.style.display = "none";
+
+    if (!nombre) {
+        mensaje.className = "message-box error";
+        mensaje.textContent = "⚠️ Por favor escribe tu nombre o seudónimo de apicultor.";
+        mensaje.style.display = "block";
+        return;
+    }
+
+    if (!texto || texto.length < 12) {
+        mensaje.className = "message-box error";
+        mensaje.textContent = "⚠️ Por favor detalla un poco más tu consejo o método (mínimo 12 caracteres).";
+        mensaje.style.display = "block";
+        return;
+    }
+
+    const nuevoConsejo = {
+        id: Date.now(),
+        nombre: nombre,
+        ubicacion: ubicacion || "Apicultor Independiente",
+        categoria: categoria,
+        metodo: metodo,
+        rating: rating,
+        texto: texto,
+        fecha: "Recién compartido",
+        likes: 1,
+        likedByUser: true
+    };
+
+    consejos.unshift(nuevoConsejo);
+    localStorage.setItem("consejosApicola", JSON.stringify(consejos));
+
+    // Resetear formulario
+    nombreInput.value = "";
+    if (ubicacionInput) ubicacionInput.value = "";
+    textoInput.value = "";
+    const charCounter = document.getElementById("charCount");
+    if (charCounter) charCounter.textContent = "0 / 600 caracteres";
+    seleccionarEstrellas(5);
+
+    mensaje.className = "message-box success";
+    mensaje.textContent = "✅ ¡Tu consejo de cuidado de colmenas fue publicado exitosamente!";
+    mensaje.style.display = "block";
+
+    renderizarConsejos();
+
+    setTimeout(() => {
+        mensaje.style.display = "none";
+    }, 4500);
+}
+
+function publicarComentario() {
+    publicarConsejo();
+}
+
+function renderizarConsejos() {
+    const contenedor = document.getElementById("consejosList") || document.getElementById("commentsList");
+    if (!contenedor) return;
+
+    // Métricas globales
+    const total = consejos.length;
+    const sumaRatings = consejos.reduce((acc, c) => acc + (c.rating || 5), 0);
+    const promedio = total > 0 ? (sumaRatings / total).toFixed(1) : "5.0";
+
+    const ratingElem = document.getElementById("ratingPromedio");
+    if (ratingElem) ratingElem.textContent = promedio;
+
+    const contadorElem = document.getElementById("contadorTotalConsejos") || document.getElementById("contadorTotalComentarios");
+    if (contadorElem) contadorElem.textContent = total;
+
+    const badgeElem = document.getElementById("feedBadgeCount");
+    if (badgeElem) badgeElem.textContent = `${total} consejos`;
+
+    // Filtro
+    const consejosFiltrados = filtroConsejoActual === 'Todos' 
+        ? consejos 
+        : consejos.filter(c => c.categoria === filtroConsejoActual);
+
+    if (consejosFiltrados.length === 0) {
+        contenedor.innerHTML = `
+            <div class="empty-comments-state">
+                <span style="font-size: 32px; display: block; margin-bottom: 8px;">💡</span>
+                <p style="font-weight: 600; color: var(--color-text-main); margin-bottom: 4px;">No hay consejos en el área "${filtroConsejoActual}"</p>
+                <p style="font-size: 13px;">¡Sé el primero en aportar una técnica o método de cuidado en este tema!</p>
+            </div>
+        `;
+        return;
+    }
+
+    contenedor.innerHTML = consejosFiltrados.map(c => {
+        const partes = c.nombre.trim().split(" ");
+        let iniciales = partes[0] ? partes[0].charAt(0).toUpperCase() : "A";
+        if (partes.length > 1 && partes[1]) iniciales += partes[1].charAt(0).toUpperCase();
+
+        const estrellasNum = Math.min(5, Math.max(1, c.rating || 5));
+        const estrellasHtml = "★".repeat(estrellasNum) + "☆".repeat(5 - estrellasNum);
+        const likedClass = c.likedByUser ? "liked" : "";
+        const metodoHtml = c.metodo ? `<span class="method-tag">${c.metodo}</span>` : "";
+
+        return `
+            <article class="comment-card">
+                <div class="comment-card-top">
+                    <div class="comment-author-info">
+                        <div class="comment-avatar">${iniciales}</div>
+                        <div class="author-meta">
+                            <h4>${c.nombre}</h4>
+                            <p>${c.ubicacion || "Apicultor en Campo"}</p>
+                        </div>
+                    </div>
+                    <div class="comment-badge-row">
+                        ${metodoHtml}
+                        <span class="category-tag">${c.categoria}</span>
+                    </div>
+                </div>
+
+                <div class="comment-card-stars" aria-label="Efectividad: ${estrellasNum} de 5 estrellas">
+                    ${estrellasHtml}
+                </div>
+
+                <div class="comment-body-text">${c.texto}</div>
+
+                <div class="comment-card-footer">
+                    <span>📅 ${c.fecha}</span>
+                    <button type="button" class="btn-like-comment ${likedClass}" onclick="darMeGustaConsejo(${c.id})">
+                        <span>💡 Me fue útil</span>
+                        <strong>${c.likes || 0}</strong>
+                    </button>
+                </div>
+            </article>
+        `;
+    }).join("");
+}
+
+function renderizarComentarios() {
+    renderizarConsejos();
 }
 
 // Inicialización en carga de DOM
@@ -1005,13 +1980,12 @@ window.addEventListener("DOMContentLoaded", () => {
     // Inicializar simulador
     calcularSimulador();
 
-    // Si el usuario ya está autenticado, mostrar directamente el dashboard
-    if (usuario && usuario.nombre) {
-        mostrarAplicacion();
-    } else {
-        document.getElementById("landing").style.display = "block";
-        document.getElementById("app").style.display = "none";
-    }
+    // Inicializar sección de consejos
+    inicializarConsejos();
+
+    // Mostrar siempre la vista de la landing con consejos
+    document.getElementById("landing").style.display = "block";
+    document.getElementById("app").style.display = "none";
 });
 </script>
 

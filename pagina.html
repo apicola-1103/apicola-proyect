@@ -1,776 +1,1018 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <title>Control Apícola</title>
+    <meta name="description" content="Sistema de registro y control de colmenas para apicultores">
+    <meta property="og:title" content="Control Apícola">
+    <meta property="og:description" content="Sistema de registro y control de colmenas para apicultores">
 
-    <title>Control Apícola🐝</title>
-
-    <!-- Conexión con el archivo CSS -->
+    <!-- Estilos de la aplicación -->
     <link rel="stylesheet" href="estilos.css">
-
-<!-- Supabase CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-        
-    </script>
-
 </head>
 
 <body>
 
-<!-- ================= LOGIN ================= -->
+<!-- ==========================================================================
+     VISTA PÚBLICA: LANDING PAGE & ACCESO PREVIO AL SISTEMA
+     ========================================================================== -->
+<div id="landing">
 
-<div id="login" class="login-container">
+    <!-- Top Navigation Bar (Contrato de 3 Zonas) -->
+    <header class="landing-header">
+        <a href="#hero" class="brand-lockup">
+            <img 
+                src="/src/assets/images/apicola_logo_honeycomb_1790193115686.jpg" 
+                alt="Emblema Control Apícola" 
+                class="brand-emblem-mini"
+                referrerpolicy="no-referrer"
+            >
+            <span class="brand-name">Control Apícola</span>
+        </a>
 
-    <div class="login-box">
+        <nav class="landing-nav">
+            <a href="#caracteristicas">Características</a>
+            <a href="#calculadora">Calculadora Apícola</a>
+            <a href="#testimonios">Testimonios</a>
+            <a href="#acceso">Acceso Apicultor</a>
+        </nav>
 
-        <div class="logo">🐝</div>
+        <div class="landing-actions">
+            <a href="#acceso" class="btn-nav-outline" onclick="abrirModoAuth('login')">
+                Iniciar Sesión
+            </a>
+            <a href="#acceso" class="btn-nav-primary" onclick="abrirModoAuth('register')">
+                <span>🐝 Registrar Apiario</span>
+            </a>
+        </div>
+    </header>
 
-        <h1>Control Apícola</h1>
+    <!-- 1. Hero Section -->
+    <section class="hero-section" id="hero">
+        <div class="hero-kicker">
+            <span>🐝</span>
+            <span>Plataforma Especializada para Apicultores</span>
+        </div>
 
-        <p class="subtitle">
-            Sistema de registro y control de colmenas
+        <h1 class="hero-title">
+            La plataforma integral para el registro, salud y rentabilidad de <span>tus colmenas</span>
+        </h1>
+
+        <p class="hero-subtitle">
+            Control Apícola facilita la gestión diaria de tus apiarios: registra inspecciones y cosechas de miel en kilogramos, monitorea la pérdida de enjambres y calcula automáticamente ingresos netos y gastos operativos.
         </p>
 
-        <input
-            type="text"
-            id="nombre"
-            placeholder="Nombre completo"
-        >
+        <div class="hero-cta-group">
+            <a href="#acceso" class="btn-hero-primary" onclick="abrirModoAuth('login')">
+                <span>🍯 Iniciar Sesión en mi Apiario</span>
+            </a>
+            <button type="button" class="btn-hero-secondary" onclick="llenarAccesoDemo()">
+                <span>⚡ Ver Demostración en Vivo</span>
+            </button>
+        </div>
 
-        <input
-            type="text"
-            id="cedula"
-            placeholder="Cédula"
-        >
+        <!-- Marquee Media Carrier -->
+        <div class="hero-media-carrier">
+            <img 
+                src="/src/assets/images/apiary_beekeeping_hero_1790193106400.jpg" 
+                alt="Apiario sostenible con colmenas de madera al amanecer" 
+                class="hero-banner-img"
+                referrerpolicy="no-referrer"
+            >
+            <div class="hero-overlay-bar">
+                <div class="hero-stat-pill">
+                    <div class="stat-item">
+                        <div class="stat-num">+35%</div>
+                        <div class="stat-lbl">Eficiencia en control de cosecha</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">100%</div>
+                        <div class="stat-lbl">Trazabilidad por colmena y kilo</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">COP $</div>
+                        <div class="stat-lbl">Balance neto automático al instante</div>
+                    </div>
+                </div>
+                <div style="font-size: 13px; color: #94a3b8;">
+                    Datos protegidos localmente · Compatible con trabajo en campo
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <input
-            type="number"
-            id="edad"
-            placeholder="Edad"
-            min="1"
-            max="120"
-        >
+    <!-- 2. Características (Bento Grid) -->
+    <section class="section-container" id="caracteristicas">
+        <div class="section-head">
+            <h2>Herramientas diseñadas para el trabajo apícola real</h2>
+            <p>Desde el conteo de cajones en el apiario hasta el cálculo de ganancias tras la extracción de miel.</p>
+        </div>
 
-        <button onclick="iniciarSesion()">
-            🐝 Iniciar sesión
-        </button>
+        <div class="bento-grid">
+            <!-- Tarjeta 1 (Ancha) -->
+            <div class="bento-card col-span-2">
+                <div class="bento-card-header">
+                    <span class="bento-badge">Trazabilidad en Campo</span>
+                    <h3>Registro de Cosecha y Extracción de Miel</h3>
+                    <p>Monitorea con precisión los kilogramos obtenidos en cada extracción estacional y evalúa el rendimiento promedio por colmena activa.</p>
+                </div>
+                <div class="bento-img-wrapper">
+                    <img 
+                        src="/src/assets/images/beekeeper_harvesting_honey_1790193205163.jpg" 
+                        alt="Apicultor inspeccionando marco de miel con abejas"
+                        referrerpolicy="no-referrer"
+                    >
+                </div>
+            </div>
 
-        <p id="loginMensaje" class="message"></p>
+            <!-- Tarjeta 2 -->
+            <div class="bento-card">
+                <div class="bento-card-header">
+                    <span class="bento-badge">Sanidad y Población</span>
+                    <h3>Censo y Detección de Pérdidas</h3>
+                    <p>Anota colmenas zanganeras, enjambrazones o bajas por plagas (Varroa o escarabajo) para tomar medidas preventivas a tiempo.</p>
+                </div>
+                <div style="background: var(--color-surface-subtle); padding: 18px; border-radius: var(--radius-sm); border: 1px dashed var(--color-border); margin-top: auto;">
+                    <div style="font-size: 12px; color: var(--color-text-muted); margin-bottom: 6px;">Indicador de alerta</div>
+                    <div style="font-size: 15px; font-weight: 700; color: var(--color-danger);">📉 Reducción del margen de pérdida estacional</div>
+                </div>
+            </div>
 
-    </div>
+            <!-- Tarjeta 3 -->
+            <div class="bento-card">
+                <div class="bento-card-header">
+                    <span class="bento-badge">Control Financiero</span>
+                    <h3>Cálculo de Insumos y Ganancia Neta</h3>
+                    <p>Resta automáticamente costos de cera estampada, alimento suplementario, transporte y empaques frente al total de ventas.</p>
+                </div>
+                <div style="background: var(--color-surface-subtle); padding: 18px; border-radius: var(--radius-sm); border: 1px dashed var(--color-border); margin-top: auto;">
+                    <div style="font-size: 12px; color: var(--color-text-muted); margin-bottom: 6px;">Fórmula Automática</div>
+                    <div style="font-size: 14px; font-weight: 700; color: var(--color-success); font-family: 'JetBrains Mono', monospace;">
+                        Ganancia = (kg × Precio) - Gastos
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta 4 (Ancha) -->
+            <div class="bento-card col-span-2">
+                <div class="bento-card-header">
+                    <span class="bento-badge">Comercialización</span>
+                    <h3>Precios de Mercado y Fraccionamiento</h3>
+                    <p>Define precios competitivos por kilogramo al por mayor o al detal para maximizar el retorno de inversión de cada temporada de floración.</p>
+                </div>
+                <div class="bento-img-wrapper">
+                    <img 
+                        src="/src/assets/images/honey_jars_market_produce_1790193214848.jpg" 
+                        alt="Frascos de miel pura artesanal y panal de cera"
+                        referrerpolicy="no-referrer"
+                    >
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Calculadora Apícola Interactiva -->
+    <section class="section-container" id="calculadora">
+        <div class="section-head">
+            <h2>Calculadora Interactiva de Rendimiento y Ganancia</h2>
+            <p>Simula la producción y el retorno estimado de tu apiario ajustando los parámetros de tu operación.</p>
+        </div>
+
+        <div class="calculator-box">
+            <div class="calc-inputs-col">
+                <h3>Parámetros del Apiario</h3>
+                <p>Mueve los controles para calcular los ingresos proyectados en pesos colombianos (COP).</p>
+
+                <div class="calc-slider-group">
+                    <div class="calc-slider-header">
+                        <span>Colmenas en Producción</span>
+                        <span class="calc-slider-val" id="valColmenas">25 colmenas</span>
+                    </div>
+                    <input 
+                        type="range" 
+                        id="sliderColmenas" 
+                        class="calc-range-input" 
+                        min="5" 
+                        max="150" 
+                        value="25" 
+                        oninput="calcularSimulador()"
+                    >
+                </div>
+
+                <div class="calc-slider-group">
+                    <div class="calc-slider-header">
+                        <span>Producción Estimada (kg por colmena/año)</span>
+                        <span class="calc-slider-val" id="valKilosPorColmena">22 kg</span>
+                    </div>
+                    <input 
+                        type="range" 
+                        id="sliderKilos" 
+                        class="calc-range-input" 
+                        min="8" 
+                        max="45" 
+                        value="22" 
+                        oninput="calcularSimulador()"
+                    >
+                </div>
+
+                <div class="calc-slider-group">
+                    <div class="calc-slider-header">
+                        <span>Precio de Venta por Kilo</span>
+                        <span class="calc-slider-val" id="valPrecioKilo">$20.000 COP</span>
+                    </div>
+                    <input 
+                        type="range" 
+                        id="sliderPrecio" 
+                        class="calc-range-input" 
+                        min="12000" 
+                        max="35000" 
+                        step="1000" 
+                        value="20000" 
+                        oninput="calcularSimulador()"
+                    >
+                </div>
+
+                <div class="calc-slider-group">
+                    <div class="calc-slider-header">
+                        <span>Gastos Operativos Anuales por Colmena</span>
+                        <span class="calc-slider-val" id="valGastosPorColmena">$90.000 COP</span>
+                    </div>
+                    <input 
+                        type="range" 
+                        id="sliderGastos" 
+                        class="calc-range-input" 
+                        min="30000" 
+                        max="200000" 
+                        step="5000" 
+                        value="90000" 
+                        oninput="calcularSimulador()"
+                    >
+                </div>
+            </div>
+
+            <div class="calc-results-col">
+                <div>
+                    <div class="calc-res-title">Proyección Anual Estimada</div>
+                    
+                    <div class="calc-metric-row">
+                        <span class="calc-metric-label">Cosecha Total Proyectada</span>
+                        <span class="calc-metric-val" id="resMielTotal">550.0 kg</span>
+                    </div>
+
+                    <div class="calc-metric-row">
+                        <span class="calc-metric-label">Ingresos Brutos Estimados</span>
+                        <span class="calc-metric-val" id="resIngresosTotal">$11.000.000</span>
+                    </div>
+
+                    <div class="calc-metric-row">
+                        <span class="calc-metric-label">Costos Operativos Totales</span>
+                        <span class="calc-metric-val" id="resGastosTotal">$2.250.000</span>
+                    </div>
+
+                    <div class="calc-metric-row">
+                        <span class="calc-metric-label">Margen de Rentabilidad</span>
+                        <span class="calc-metric-val" id="resMargenUtilidad" style="color: #86efac;">79.5%</span>
+                    </div>
+                </div>
+
+                <div class="calc-profit-highlight">
+                    <div class="calc-profit-lbl">Ganancia Neta Anual Proyectada</div>
+                    <div class="calc-profit-val" id="resGananciaNeta">$8.750.000 COP</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Testimonios de Apicultores Reales -->
+    <section class="section-container" id="testimonios">
+        <div class="section-head">
+            <h2>Respaldado por apicultores en el territorio</h2>
+            <p>Historias de productores que transformaron la gestión técnica y económica de sus apiarios.</p>
+        </div>
+
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <p class="testimonial-quote">
+                    "Antes anotaba las cosechas en una libreta de papel que se llenaba de propóleo y humedad. Con Control Apícola sé exactamente cuánto produjo cada grupo de colmenas y el valor neto al instante."
+                </p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">CM</div>
+                    <div class="author-info">
+                        <h4>Carlos Mendoza</h4>
+                        <p>Apiario El Roble · Boyacá (34 colmenas)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <p class="testimonial-quote">
+                    "Saber el desglose de gastos en combustible y alimentación suplementaria frente al precio por kilo nos permitió negociar mejor con los distribuidores mayoristas de miel pura."
+                </p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">ML</div>
+                    <div class="author-info">
+                        <h4>Marta Lucía Gómez</h4>
+                        <p>Apicultura de Montaña · Antioquia (50 colmenas)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <p class="testimonial-quote">
+                    "El control riguroso de pérdidas nos ayudó a identificar qué apiarios tenían más ataque de hormigas y humedad. Redujimos la mortalidad de colmenas un 60% esta temporada."
+                </p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">JR</div>
+                    <div class="author-info">
+                        <h4>Javier Ramos</h4>
+                        <p>Finca La Reina · Santander (80 colmenas)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Sección de Acceso / Login y Registro -->
+    <section class="access-section" id="acceso">
+        <div class="access-wrapper">
+            <div class="access-content">
+                <h2>Ingresa a tu panel de Control Apícola</h2>
+                <p>
+                    Accede a tus registros históricos de cosechas, actualiza tus inspecciones y lleva la contabilidad transparente de tus colmenas.
+                </p>
+
+                <div class="access-perks">
+                    <div class="perk-item">
+                        <span>✓</span>
+                        <p>Almacenamiento seguro y privado en tu navegador local.</p>
+                    </div>
+                    <div class="perk-item">
+                        <span>✓</span>
+                        <p>Acceso inmediato sin dependencias complicadas ni demoras.</p>
+                    </div>
+                    <div class="perk-item">
+                        <span>✓</span>
+                        <p>Reportes claros de rendimiento de miel y balances en COP.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Auth Form Card -->
+            <div class="auth-card">
+                <div class="auth-card-head">
+                    <h3 id="authTitle">Iniciar Sesión</h3>
+                    <p id="authSubtitle">Ingresa tus datos de apicultor para acceder al sistema.</p>
+                </div>
+
+                <div class="auth-toggle">
+                    <button type="button" id="tabLogin" class="active" onclick="cambiarModoAuth('login')">
+                        Iniciar Sesión
+                    </button>
+                    <button type="button" id="tabRegister" onclick="cambiarModoAuth('register')">
+                        Registrar Apiario
+                    </button>
+                </div>
+
+                <form id="authForm" onsubmit="event.preventDefault(); procesarAuth();">
+                    <div class="form-group">
+                        <label for="nombre">Nombre Completo del Apicultor</label>
+                        <input
+                            type="text"
+                            id="nombre"
+                            placeholder="Ej: Carlos Mendoza"
+                            autocomplete="name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cedula">Cédula o Documento de Identidad</label>
+                        <input
+                            type="text"
+                            id="cedula"
+                            placeholder="Ej: 1098765432"
+                            autocomplete="username"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group" id="groupApiario" style="display: none;">
+                        <label for="apiario">Nombre del Apiario o Finca (Opcional)</label>
+                        <input
+                            type="text"
+                            id="apiario"
+                            placeholder="Ej: Apiario La Colmena Dorada"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edad">Edad del Apicultor</label>
+                        <input
+                            type="number"
+                            id="edad"
+                            min="1"
+                            max="120"
+                            placeholder="Ej: 38"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="recordarSesion" checked>
+                            <span>Recordar sesión en este equipo</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" id="btnSubmitAuth" class="btn-primary">
+                        <span>🐝 Entrar al Sistema Apícola</span>
+                    </button>
+
+                    <button type="button" class="btn-demo" onclick="llenarAccesoDemo()">
+                        ⚡ Entrar con cuenta de demostración
+                    </button>
+
+                    <div id="loginMensaje" class="message-box"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Footer -->
+    <footer class="landing-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <img 
+                    src="/src/assets/images/apicola_logo_honeycomb_1790193115686.jpg" 
+                    alt="Logo Control Apícola" 
+                    class="brand-emblem-mini"
+                    referrerpolicy="no-referrer"
+                >
+                <span style="font-weight: 700; color: var(--color-text-main);">Control Apícola</span>
+                <span>· Sistema de Registro para Apicultores</span>
+            </div>
+
+            <div class="footer-nav">
+                <a href="#hero">Inicio</a>
+                <a href="#caracteristicas">Características</a>
+                <a href="#calculadora">Calculadora</a>
+                <a href="#acceso">Acceso</a>
+            </div>
+
+            <div>
+                © Control Apícola. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
 
 </div>
 
-
+<!-- ==========================================================================
+     VISTA PRIVADA: DASHBOARD DE CONTROL APÍCOLA (#app)
+     ========================================================================== -->
 <div id="app">
 
-<header>
-
-    <h2>🐝 Control Apícola</h2>
-
-    <button
-        class="logout"
-        onclick="cerrarSesion()">
-
-        Cerrar sesión
-
-    </button>
-
-</header>
-
-
-<div class="container">
-
-    <div class="welcome">
-
-        <h2>
-            Bienvenido/a,
-            <span id="usuarioNombre"></span> 👋
-        </h2>
-
-        <p>
-            Aquí puedes administrar la información de tus colmenas.
-        </p>
-
-    </div>
-
-    <div class="summary">
-
-        <div class="card">
-
-            <span>🐝</span>
-
-            <h4>Colmenas</h4>
-
-            <p id="totalColmenas">0</p>
-
+    <!-- Barra de Navegación del Sistema -->
+    <header class="app-navbar">
+        <div class="app-brand">
+            <img 
+                src="/src/assets/images/apicola_logo_honeycomb_1790193115686.jpg" 
+                alt="Logo Control Apícola"
+                referrerpolicy="no-referrer"
+            >
+            <h2>Control Apícola</h2>
         </div>
 
-
-        <div class="card">
-
-            <span>🍯</span>
-
-            <h4>Miel producida</h4>
-
-            <p id="totalMiel">0 kg</p>
-
-        </div>
-
-
-        <div class="card">
-
-            <span>📉</span>
-
-            <h4>Pérdidas</h4>
-
-            <p id="totalPerdidas">0</p>
-
-        </div>
-
-
-        <div class="card">
-
-            <span>💰</span>
-
-            <h4>Ganancia</h4>
-
-            <p id="totalGanancia">$0</p>
-
-        </div>
-
-    </div>
-
-
-    <!-- ================= FORMULARIO ================= -->
-
-    <div class="form-card">
-
-        <h3>📋 Nuevo registro</h3>
-
-        <div class="grid">
-
-            <div>
-
-                <label>
-                    Cantidad de colmenas
-                </label>
-
-                <input
-                    type="number"
-                    id="colmenas"
-                    min="0"
-                    placeholder="Ej: 20"
-                >
-
+        <div class="navbar-user-section">
+            <div class="user-badge">
+                <div class="user-name" id="navbarUsuarioNombre">Apicultor</div>
+                <div class="user-meta" id="navbarUsuarioMeta">Cédula: -</div>
             </div>
 
+            <button class="btn-logout" onclick="cerrarSesion()">
+                Cerrar sesión
+            </button>
+        </div>
+    </header>
 
-            <div>
-
-                <label>
-                    Colmenas perdidas
-                </label>
-
-                <input
-                    type="number"
-                    id="perdidas"
-                    min="0"
-                    placeholder="Ej: 2"
-                >
-
+    <main class="main-content">
+        <!-- Banner de Bienvenida -->
+        <div class="welcome-banner">
+            <div class="welcome-info">
+                <h3>Bienvenido/a, <span id="usuarioNombre"></span> 👋</h3>
+                <p id="usuarioApiarioTexto">Aquí puedes administrar las colmenas y cosechas de tu apiario.</p>
             </div>
-
-
-            <div>
-
-                <label>
-                    Cantidad de miel (kg)
-                </label>
-
-                <input
-                    type="number"
-                    id="miel"
-                    min="0"
-                    step="0.01"
-                    placeholder="Ej: 50"
-                >
-
+            <div class="welcome-meta" id="fechaActual">
+                <!-- Se llena dinámicamente con JS -->
             </div>
-
-
-            <div>
-
-                <label>
-                    Precio por kg de miel
-                </label>
-
-                <input
-                    type="number"
-                    id="precio"
-                    min="0"
-                    step="0.01"
-                    placeholder="Ej: 18000"
-                >
-
-            </div>
-
-
-            <div>
-
-                <label>
-                    Gastos
-                </label>
-
-                <input
-                    type="number"
-                    id="gastos"
-                    min="0"
-                    step="0.01"
-                    placeholder="Ej: 200000"
-                >
-
-            </div>
-
         </div>
 
-        <button onclick="guardarRegistro()">
+        <!-- Tarjetas de Resumen Numérico -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-header">
+                    <h4>Colmenas Inspeccionadas</h4>
+                    <span>🐝</span>
+                </div>
+                <div class="metric-value highlight-amber" id="totalColmenas">0</div>
+            </div>
 
-            💾 Guardar registro
+            <div class="metric-card">
+                <div class="metric-header">
+                    <h4>Miel Producida</h4>
+                    <span>🍯</span>
+                </div>
+                <div class="metric-value" id="totalMiel">0 kg</div>
+            </div>
 
-        </button>
+            <div class="metric-card">
+                <div class="metric-header">
+                    <h4>Colmenas Perdidas</h4>
+                    <span>📉</span>
+                </div>
+                <div class="metric-value" id="totalPerdidas">0</div>
+            </div>
 
-        <p
-            id="registroMensaje"
-            class="message">
-        </p>
-
-    </div>
-
-
-    <!-- ================= HISTORIAL ================= -->
-
-    <div class="form-card">
-
-        <h3>📊 Historial de registros</h3>
-
-        <div class="table-container">
-
-            <table>
-
-                <thead>
-
-                    <tr>
-
-                        <th>Fecha</th>
-                        <th>Colmenas</th>
-                        <th>Pérdidas</th>
-                        <th>Miel (kg)</th>
-                        <th>Precio/kg</th>
-                        <th>Ingresos</th>
-                        <th>Gastos</th>
-                        <th>Ganancia</th>
-                        <th>Acción</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody id="tablaRegistros"></tbody>
-
-            </table>
-
+            <div class="metric-card">
+                <div class="metric-header">
+                    <h4>Ganancia Neta Acumulada</h4>
+                    <span>💰</span>
+                </div>
+                <div class="metric-value highlight-green" id="totalGanancia">$0</div>
+            </div>
         </div>
 
-    </div>
+        <!-- Formulario de Nuevo Registro -->
+        <div class="card-section">
+            <div class="section-header">
+                <h3>📋 Nuevo Registro de Cosecha e Inspección</h3>
+            </div>
+
+            <form id="registroForm" onsubmit="event.preventDefault(); guardarRegistro();">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="colmenas">Cantidad de colmenas inspeccionadas</label>
+                        <input
+                            type="number"
+                            id="colmenas"
+                            min="0"
+                            placeholder="Ej: 20"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="perdidas">Colmenas perdidas / inactivas</label>
+                        <input
+                            type="number"
+                            id="perdidas"
+                            min="0"
+                            placeholder="Ej: 2"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="miel">Cantidad de miel cosechada (kg)</label>
+                        <input
+                            type="number"
+                            id="miel"
+                            min="0"
+                            step="0.01"
+                            placeholder="Ej: 50.5"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="precio">Precio de venta por kg (COP)</label>
+                        <input
+                            type="number"
+                            id="precio"
+                            min="0"
+                            step="0.01"
+                            placeholder="Ej: 18000"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gastos">Gastos operativos e insumos (COP)</label>
+                        <input
+                            type="number"
+                            id="gastos"
+                            min="0"
+                            step="0.01"
+                            placeholder="Ej: 200000"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group" style="display: flex; align-items: flex-end;">
+                        <button type="submit" class="btn-primary" style="margin: 0; width: 100%;">
+                            <span>💾 Guardar Registro</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="registroMensaje" class="message-box"></div>
+            </form>
+        </div>
+
+        <!-- Historial de Registros -->
+        <div class="card-section">
+            <div class="section-header">
+                <h3>📊 Historial de Registros</h3>
+                <span id="contadorRegistros" style="font-size: 13px; color: var(--color-text-muted);">
+                    0 registros registrados
+                </span>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th class="num">Colmenas</th>
+                            <th class="num">Pérdidas</th>
+                            <th class="num">Miel (kg)</th>
+                            <th class="num">Precio/kg</th>
+                            <th class="num">Ingresos</th>
+                            <th class="num">Gastos</th>
+                            <th class="num">Ganancia</th>
+                            <th style="text-align: center;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaRegistros"></tbody>
+                </table>
+            </div>
+
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <span>🐝</span>
+                <p><strong>Aún no tienes registros guardados</strong></p>
+                <p style="font-size: 13px; margin-top: 4px;">Completa el formulario superior para registrar la primera cosecha o inspección.</p>
+            </div>
+        </div>
+    </main>
 
 </div>
 
-</div>
-
-
+<!-- ==========================================================================
+     LÓGICA JAVASCRIPT DE LA APLICACIÓN
+     ========================================================================== -->
 <script>
+// Estado de usuario y registros en localStorage
+let usuario = JSON.parse(localStorage.getItem("usuarioApicola")) || null;
+let registros = JSON.parse(localStorage.getItem("registrosApicola")) || [];
 
-// ================= DATOS DEL USUARIO =================
+// Formateador de moneda en pesos colombianos
+function formatoDinero(valor) {
+    return new Intl.NumberFormat("es-CO", {
+        style: "currency",
+        currency: "COP",
+        maximumFractionDigits: 0
+    }).format(valor);
+}
 
-let usuario =
-    JSON.parse(
-        localStorage.getItem("usuarioApicola")
-    );
+// --------------------------------------------------------------------------
+// Lógica de la Calculadora de Rendimiento de la Landing Page
+// --------------------------------------------------------------------------
+function calcularSimulador() {
+    const colmenas = Number(document.getElementById("sliderColmenas").value);
+    const kilosPorColmena = Number(document.getElementById("sliderKilos").value);
+    const precioKilo = Number(document.getElementById("sliderPrecio").value);
+    const gastosPorColmena = Number(document.getElementById("sliderGastos").value);
 
-let registros =
-    JSON.parse(
-        localStorage.getItem("registrosApicola")
-    ) || [];
+    // Actualizar etiquetas en la interfaz
+    document.getElementById("valColmenas").textContent = `${colmenas} colmenas`;
+    document.getElementById("valKilosPorColmena").textContent = `${kilosPorColmena} kg`;
+    document.getElementById("valPrecioKilo").textContent = `${formatoDinero(precioKilo)} COP`;
+    document.getElementById("valGastosPorColmena").textContent = `${formatoDinero(gastosPorColmena)} COP`;
 
+    // Cálculos
+    const mielTotal = colmenas * kilosPorColmena;
+    const ingresosTotal = mielTotal * precioKilo;
+    const gastosTotal = colmenas * gastosPorColmena;
+    const gananciaNeta = ingresosTotal - gastosTotal;
+    const margen = ingresosTotal > 0 ? ((gananciaNeta / ingresosTotal) * 100).toFixed(1) : 0;
 
-// ================= INICIAR SESIÓN =================
+    // Actualizar resultados en DOM
+    document.getElementById("resMielTotal").textContent = `${mielTotal.toFixed(1)} kg`;
+    document.getElementById("resIngresosTotal").textContent = formatoDinero(ingresosTotal);
+    document.getElementById("resGastosTotal").textContent = formatoDinero(gastosTotal);
+    document.getElementById("resMargenUtilidad").textContent = `${margen}%`;
+    document.getElementById("resGananciaNeta").textContent = `${formatoDinero(gananciaNeta)} COP`;
+}
 
-function iniciarSesion() {
+// --------------------------------------------------------------------------
+// Lógica de Autenticación & Transición Landing <-> Dashboard
+// --------------------------------------------------------------------------
+function abrirModoAuth(modo) {
+    cambiarModoAuth(modo);
+    const elAcceso = document.getElementById("acceso");
+    if (elAcceso) {
+        elAcceso.scrollIntoView({ behavior: 'smooth' });
+    }
+}
 
-    const nombre =
-        document
-        .getElementById("nombre")
-        .value
-        .trim();
+function cambiarModoAuth(modo) {
+    const tabLogin = document.getElementById("tabLogin");
+    const tabRegister = document.getElementById("tabRegister");
+    const authTitle = document.getElementById("authTitle");
+    const authSubtitle = document.getElementById("authSubtitle");
+    const groupApiario = document.getElementById("groupApiario");
+    const btnSubmit = document.getElementById("btnSubmitAuth");
+    const mensaje = document.getElementById("loginMensaje");
 
-    const cedula =
-        document
-        .getElementById("cedula")
-        .value
-        .trim();
+    mensaje.style.display = "none";
 
-    const edad =
-        document
-        .getElementById("edad")
-        .value;
+    if (modo === 'register') {
+        tabLogin.classList.remove("active");
+        tabRegister.classList.add("active");
+        authTitle.textContent = "Registrar Nuevo Apiario";
+        authSubtitle.textContent = "Crea el perfil de tu apiario para comenzar a registrar colmenas.";
+        groupApiario.style.display = "block";
+        btnSubmit.innerHTML = "<span>🌱 Registrarse y Entrar</span>";
+    } else {
+        tabRegister.classList.remove("active");
+        tabLogin.classList.add("active");
+        authTitle.textContent = "Iniciar Sesión";
+        authSubtitle.textContent = "Ingresa tus datos de apicultor para acceder al sistema.";
+        groupApiario.style.display = "none";
+        btnSubmit.innerHTML = "<span>🐝 Entrar al Sistema Apícola</span>";
+    }
+}
 
-    const mensaje =
-        document
-        .getElementById("loginMensaje");
+function llenarAccesoDemo() {
+    document.getElementById("nombre").value = "Carlos Mendoza";
+    document.getElementById("cedula").value = "1098765432";
+    document.getElementById("edad").value = "38";
+    document.getElementById("apiario").value = "Apiario La Colmena Dorada";
 
+    // Sembrar datos de ejemplo útiles si no hay registros existentes
+    if (!registros || registros.length === 0) {
+        registros = [
+            {
+                fecha: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toLocaleDateString("es-CO"),
+                colmenas: 24,
+                perdidas: 1,
+                miel: 68.5,
+                precio: 20000,
+                ingresos: 1370000,
+                gastos: 280000,
+                ganancia: 1090000
+            },
+            {
+                fecha: new Date().toLocaleDateString("es-CO"),
+                colmenas: 30,
+                perdidas: 0,
+                miel: 95.0,
+                precio: 21000,
+                ingresos: 1995000,
+                gastos: 350000,
+                ganancia: 1645000
+            }
+        ];
+        localStorage.setItem("registrosApicola", JSON.stringify(registros));
+    }
 
-    if (
-        nombre === "" ||
-        cedula === "" ||
-        edad === ""
-    ) {
+    procesarAuth();
+}
 
-        mensaje.textContent =
-            "⚠️ Por favor completa todos los campos.";
+function procesarAuth() {
+    const nombre = document.getElementById("nombre").value.trim();
+    const cedula = document.getElementById("cedula").value.trim();
+    const edadVal = document.getElementById("edad").value;
+    const apiario = document.getElementById("apiario").value.trim();
+    const recordar = document.getElementById("recordarSesion").checked;
+    const mensaje = document.getElementById("loginMensaje");
 
+    mensaje.className = "message-box";
+    mensaje.style.display = "none";
+
+    if (!nombre || !cedula || !edadVal) {
+        mensaje.className = "message-box error";
+        mensaje.textContent = "⚠️ Por favor completa los campos requeridos (Nombre, Cédula y Edad).";
         return;
     }
 
-
-    if (edad < 1 || edad > 120) {
-
-        mensaje.textContent =
-            "⚠️ Ingresa una edad válida.";
-
+    const edad = Number(edadVal);
+    if (isNaN(edad) || edad < 1 || edad > 120) {
+        mensaje.className = "message-box error";
+        mensaje.textContent = "⚠️ Por favor ingresa una edad válida entre 1 y 120 años.";
         return;
     }
-
 
     usuario = {
-
         nombre: nombre,
-
         cedula: cedula,
-
-        edad: edad
-
+        edad: edad,
+        apiario: apiario || "Apiario Familiar"
     };
 
+    if (recordar) {
+        localStorage.setItem("usuarioApicola", JSON.stringify(usuario));
+    } else {
+        sessionStorage.setItem("usuarioApicola", JSON.stringify(usuario));
+    }
 
-    localStorage.setItem(
-        "usuarioApicola",
-        JSON.stringify(usuario)
-    );
+    mensaje.className = "message-box success";
+    mensaje.textContent = "✅ ¡Acceso verificado! Ingresando al panel de control...";
 
-
-    mostrarAplicacion();
-
+    setTimeout(() => {
+        mostrarAplicacion();
+    }, 350);
 }
 
-
-// ================= MOSTRAR APLICACIÓN =================
+function iniciarSesion() {
+    procesarAuth();
+}
 
 function mostrarAplicacion() {
+    document.getElementById("landing").style.display = "none";
+    document.getElementById("app").style.display = "block";
+    window.scrollTo({ top: 0, behavior: 'instant' });
 
-    document
-        .getElementById("login")
-        .style.display = "none";
+    // Información del usuario en navbar y banner
+    document.getElementById("usuarioNombre").textContent = usuario.nombre;
+    document.getElementById("navbarUsuarioNombre").textContent = usuario.nombre;
+    document.getElementById("navbarUsuarioMeta").textContent = `Cédula: ${usuario.cedula}`;
 
+    if (usuario.apiario) {
+        document.getElementById("usuarioApiarioTexto").textContent = 
+            `Administración de: ${usuario.apiario} · ${usuario.edad} años`;
+    }
 
-    document
-        .getElementById("app")
-        .style.display = "block";
-
-
-    document
-        .getElementById("usuarioNombre")
-        .textContent = usuario.nombre;
-
+    // Fecha actual formateada
+    const opcionesFecha = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const fechaTexto = new Date().toLocaleDateString('es-CO', opcionesFecha);
+    document.getElementById("fechaActual").textContent = `📅 ${fechaTexto.charAt(0).toUpperCase() + fechaTexto.slice(1)}`;
 
     mostrarRegistros();
-
 }
-
-
-// ================= CERRAR SESIÓN =================
 
 function cerrarSesion() {
+    localStorage.removeItem("usuarioApicola");
+    sessionStorage.removeItem("usuarioApicola");
+    usuario = null;
 
-    document
-        .getElementById("app")
-        .style.display = "none";
+    document.getElementById("app").style.display = "none";
+    document.getElementById("landing").style.display = "block";
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
-
-    document
-        .getElementById("login")
-        .style.display = "flex";
-
+    const mensaje = document.getElementById("loginMensaje");
+    if (mensaje) mensaje.style.display = "none";
 }
 
-
-// ================= GUARDAR REGISTRO =================
-
+// --------------------------------------------------------------------------
+// Lógica de Registro y Gestión de Colmenas
+// --------------------------------------------------------------------------
 function guardarRegistro() {
+    const colmenasInput = document.getElementById("colmenas").value;
+    const perdidasInput = document.getElementById("perdidas").value;
+    const mielInput = document.getElementById("miel").value;
+    const precioInput = document.getElementById("precio").value;
+    const gastosInput = document.getElementById("gastos").value;
 
-    const colmenas =
-        Number(
-            document
-            .getElementById("colmenas")
-            .value
-        );
+    const mensaje = document.getElementById("registroMensaje");
+    mensaje.className = "message-box";
+    mensaje.style.display = "none";
 
-
-    const perdidas =
-        Number(
-            document
-            .getElementById("perdidas")
-            .value
-        );
-
-
-    const miel =
-        Number(
-            document
-            .getElementById("miel")
-            .value
-        );
-
-
-    const precio =
-        Number(
-            document
-            .getElementById("precio")
-            .value
-        );
-
-
-    const gastos =
-        Number(
-            document
-            .getElementById("gastos")
-            .value
-        );
-
-
-    const mensaje =
-        document
-        .getElementById("registroMensaje");
-
-
-    if (
-        colmenas < 0 ||
-        perdidas < 0 ||
-        miel < 0 ||
-        precio < 0 ||
-        gastos < 0
-    ) {
-
-        mensaje.textContent =
-            "⚠️ Los valores no pueden ser negativos.";
-
+    if (colmenasInput === "" || perdidasInput === "" || mielInput === "" || precioInput === "" || gastosInput === "") {
+        mensaje.className = "message-box error";
+        mensaje.textContent = "⚠️ Por favor completa todos los campos del registro.";
         return;
     }
 
+    const colmenas = Number(colmenasInput);
+    const perdidas = Number(perdidasInput);
+    const miel = Number(mielInput);
+    const precio = Number(precioInput);
+    const gastos = Number(gastosInput);
 
-    if (
-        document
-        .getElementById("colmenas")
-        .value === "" ||
-
-        document
-        .getElementById("miel")
-        .value === "" ||
-
-        document
-        .getElementById("precio")
-        .value === ""
-    ) {
-
-        mensaje.textContent =
-            "⚠️ Completa los campos principales.";
-
+    if (colmenas < 0 || perdidas < 0 || miel < 0 || precio < 0 || gastos < 0) {
+        mensaje.className = "message-box error";
+        mensaje.textContent = "⚠️ Los valores no pueden ser números negativos.";
         return;
     }
 
+    // Cálculos
+    const ingresos = miel * precio;
+    const ganancia = ingresos - gastos;
 
-    // CÁLCULOS
-
-    const ingresos =
-        miel * precio;
-
-    const ganancia =
-        ingresos - gastos;
-
-
-    // REGISTRO
-
-    const registro = {
-
-        fecha:
-            new Date()
-            .toLocaleDateString(),
-
-        colmenas:
-            colmenas,
-
-        perdidas:
-            perdidas,
-
-        miel:
-            miel,
-
-        precio:
-            precio,
-
-        ingresos:
-            ingresos,
-
-        gastos:
-            gastos,
-
-        ganancia:
-            ganancia
-
+    const nuevoRegistro = {
+        fecha: new Date().toLocaleDateString("es-CO"),
+        colmenas: colmenas,
+        perdidas: perdidas,
+        miel: miel,
+        precio: precio,
+        ingresos: ingresos,
+        gastos: gastos,
+        ganancia: ganancia
     };
 
+    registros.unshift(nuevoRegistro);
+    localStorage.setItem("registrosApicola", JSON.stringify(registros));
 
-    registros.push(registro);
+    mensaje.className = "message-box success";
+    mensaje.textContent = "✅ Registro guardado exitosamente en el historial.";
 
-
-    localStorage.setItem(
-        "registrosApicola",
-        JSON.stringify(registros)
-    );
-
-
-    mensaje.style.color = "green";
-
-
-    mensaje.textContent =
-        "✅ Registro guardado correctamente.";
-
-
-    // LIMPIAR FORMULARIO
-
-    document
-        .getElementById("colmenas")
-        .value = "";
-
-    document
-        .getElementById("perdidas")
-        .value = "";
-
-    document
-        .getElementById("miel")
-        .value = "";
-
-    document
-        .getElementById("precio")
-        .value = "";
-
-    document
-        .getElementById("gastos")
-        .value = "";
-
+    // Limpiar campos
+    document.getElementById("colmenas").value = "";
+    document.getElementById("perdidas").value = "";
+    document.getElementById("miel").value = "";
+    document.getElementById("precio").value = "";
+    document.getElementById("gastos").value = "";
 
     mostrarRegistros();
 
+    setTimeout(() => {
+        mensaje.style.display = "none";
+    }, 3500);
 }
 
-
-// ================= MOSTRAR REGISTROS =================
-
 function mostrarRegistros() {
-
-    const tabla =
-        document
-        .getElementById("tablaRegistros");
-
+    const tabla = document.getElementById("tablaRegistros");
+    const emptyState = document.getElementById("emptyState");
+    const contador = document.getElementById("contadorRegistros");
 
     tabla.innerHTML = "";
 
-
-    let totalColmenas = 0;
-
-    let totalMiel = 0;
-
-    let totalPerdidas = 0;
-
-    let totalGanancia = 0;
-
-
-    registros.forEach(
-        (registro, index) => {
-
-            totalColmenas +=
-                registro.colmenas;
-
-            totalMiel +=
-                registro.miel;
-
-            totalPerdidas +=
-                registro.perdidas;
-
-            totalGanancia +=
-                registro.ganancia;
-
-
-            const fila =
-                document.createElement("tr");
-
-
-            fila.innerHTML = `
-
-                <td>
-                    ${registro.fecha}
-                </td>
-
-                <td>
-                    ${registro.colmenas}
-                </td>
-
-                <td>
-                    ${registro.perdidas}
-                </td>
-
-                <td>
-                    ${registro.miel.toFixed(2)}
-                </td>
-
-                <td>
-                    ${formatoDinero(
-                        registro.precio
-                    )}
-                </td>
-
-                <td>
-                    ${formatoDinero(
-                        registro.ingresos
-                    )}
-                </td>
-
-                <td>
-                    ${formatoDinero(
-                        registro.gastos
-                    )}
-                </td>
-
-                <td>
-                    ${formatoDinero(
-                        registro.ganancia
-                    )}
-                </td>
-
-                <td>
-
-                    <button
-                        class="delete"
-                        onclick="
-                            eliminarRegistro(${index})
-                        "
-                    >
-                        🗑️ Eliminar
-                    </button>
-
-                </td>
-
-            `;
-
-
-            tabla.appendChild(fila);
-
-        }
-    );
-
-
-    document
-        .getElementById("totalColmenas")
-        .textContent =
-        totalColmenas;
-
-
-    document
-        .getElementById("totalMiel")
-        .textContent =
-        totalMiel.toFixed(2) + " kg";
-
-
-    document
-        .getElementById("totalPerdidas")
-        .textContent =
-        totalPerdidas;
-
-
-    document
-        .getElementById("totalGanancia")
-        .textContent =
-        formatoDinero(totalGanancia);
-
-}
-
-
-// ================= ELIMINAR =================
-
-function eliminarRegistro(index) {
-
-    if (
-        confirm(
-            "¿Seguro que quieres eliminar este registro?"
-        )
-    ) {
-
-        registros.splice(index, 1);
-
-
-        localStorage.setItem(
-            "registrosApicola",
-            JSON.stringify(registros)
-        );
-
-
-        mostrarRegistros();
-
+    if (!registros || registros.length === 0) {
+        emptyState.style.display = "block";
+        contador.textContent = "0 registros guardados";
+        document.getElementById("totalColmenas").textContent = "0";
+        document.getElementById("totalMiel").textContent = "0 kg";
+        document.getElementById("totalPerdidas").textContent = "0";
+        document.getElementById("totalGanancia").textContent = "$0";
+        return;
     }
 
+    emptyState.style.display = "none";
+    contador.textContent = `${registros.length} ${registros.length === 1 ? 'registro guardado' : 'registros guardados'}`;
+
+    let totalColmenas = 0;
+    let totalMiel = 0;
+    let totalPerdidas = 0;
+    let totalGanancia = 0;
+
+    registros.forEach((reg, index) => {
+        totalColmenas += reg.colmenas || 0;
+        totalMiel += reg.miel || 0;
+        totalPerdidas += reg.perdidas || 0;
+        totalGanancia += reg.ganancia || 0;
+
+        const fila = document.createElement("tr");
+        const gananciaClase = reg.ganancia >= 0 ? "badge-ganancia-positiva" : "badge-ganancia-negativa";
+
+        fila.innerHTML = `
+            <td><strong>${reg.fecha}</strong></td>
+            <td class="num">${reg.colmenas}</td>
+            <td class="num">${reg.perdidas}</td>
+            <td class="num">${Number(reg.miel).toFixed(2)} kg</td>
+            <td class="num">${formatoDinero(reg.precio)}</td>
+            <td class="num">${formatoDinero(reg.ingresos)}</td>
+            <td class="num">${formatoDinero(reg.gastos)}</td>
+            <td class="num ${gananciaClase}">${formatoDinero(reg.ganancia)}</td>
+            <td style="text-align: center;">
+                <button class="btn-delete-row" onclick="eliminarRegistro(${index})">
+                    🗑️ Eliminar
+                </button>
+            </td>
+        `;
+
+        tabla.appendChild(fila);
+    });
+
+    document.getElementById("totalColmenas").textContent = totalColmenas;
+    document.getElementById("totalMiel").textContent = totalMiel.toFixed(2) + " kg";
+    document.getElementById("totalPerdidas").textContent = totalPerdidas;
+    document.getElementById("totalGanancia").textContent = formatoDinero(totalGanancia);
 }
 
-
-// ================= FORMATO DINERO =================
-
-function formatoDinero(valor) {
-
-    return new Intl.NumberFormat(
-        "es-CO",
-        {
-            style: "currency",
-
-            currency: "COP",
-
-            maximumFractionDigits: 0
-        }
-    ).format(valor);
-
+function eliminarRegistro(index) {
+    if (confirm("¿Estás seguro de que deseas eliminar este registro del historial?")) {
+        registros.splice(index, 1);
+        localStorage.setItem("registrosApicola", JSON.stringify(registros));
+        mostrarRegistros();
+    }
 }
 
+// Inicialización en carga de DOM
+window.addEventListener("DOMContentLoaded", () => {
+    // Inicializar simulador
+    calcularSimulador();
 
-// ================= CARGAR SESIÓN =================
-
-if (usuario) {
-
-    mostrarAplicacion();
-
-}
-
+    // Si el usuario ya está autenticado, mostrar directamente el dashboard
+    if (usuario && usuario.nombre) {
+        mostrarAplicacion();
+    } else {
+        document.getElementById("landing").style.display = "block";
+        document.getElementById("app").style.display = "none";
+    }
+});
 </script>
 
 </body>

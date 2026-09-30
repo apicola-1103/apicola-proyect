@@ -5,6 +5,20 @@ const SUPABASE_ANON_KEY = (typeof process !== 'undefined' && process.env && proc
   || (typeof window !== 'undefined' && window.SUPABASE_ANON_KEY)
   || '';
 
-export const db = typeof supabase !== 'undefined' && supabase.createClient && SUPABASE_URL && SUPABASE_ANON_KEY
-  ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-  : null;
+let client = null;
+if (typeof supabase !== 'undefined' && supabase.createClient && SUPABASE_URL && SUPABASE_ANON_KEY) {
+  try {
+    client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  } catch (e) {
+    console.warn('Failed to initialize Supabase client:', e);
+  }
+}
+
+export const db = client || {
+  from: () => ({
+    select: async () => ({ data: [], error: null }),
+    insert: async (records) => ({ data: records, error: null }),
+    update: async () => ({ data: [], error: null }),
+    delete: async () => ({ data: [], error: null })
+  })
+};

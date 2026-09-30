@@ -8,8 +8,20 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // Serve static files from the root directory
 app.use(express.static(__dirname));
+
+// Health check / API status endpoint
+app.get('/api/status', (req, res) => {
+  res.json({
+    status: 'ok',
+    app: 'Control Apícola',
+    timestamp: new Date().toISOString()
+  });
+});
 
 // Route root request to index.html
 app.get('/', (req, res) => {
@@ -26,6 +38,10 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on port ${PORT}`);
-});
+if (process.env.VERCEL !== '1') {
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+export default app;

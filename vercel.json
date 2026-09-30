@@ -1,6 +1,15 @@
 {
   "version": 2,
+  "cleanUrls": false,
   "rewrites": [
+    {
+      "source": "/estilos.css",
+      "destination": "/estilos.css"
+    },
+    {
+      "source": "/src/assets/images/:path*",
+      "destination": "/src/assets/images/:path*"
+    },
     {
       "source": "/pagina",
       "destination": "/pagina.html"

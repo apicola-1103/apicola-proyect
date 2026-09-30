@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "node server.js",
-    "build": "echo 'Static app ready'",
+    "build": "mkdir -p public/src/assets/images && cp estilos.css public/ && cp -r src/assets/images/* public/src/assets/images/ && cp index.html pagina.html public/ 2>/dev/null || true",
     "start": "node server.js",
     "lint": "echo 'No lint errors'"
   },

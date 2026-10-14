@@ -4,12 +4,20 @@
   "description": "Sistema de registro y control de colmenas para apicultores",
   "type": "module",
   "scripts": {
-    "dev": "node server.js",
-    "build": "mkdir -p public/src/assets/images && cp estilos.css public/ && cp -r src/assets/images/* public/src/assets/images/ && cp index.html pagina.html public/ 2>/dev/null || true",
-    "start": "node server.js",
+    "dev": "vite --host 0.0.0.0 --port 3000",
+    "build": "vite build",
+    "preview": "vite preview --port 3000",
     "lint": "echo 'No lint errors'"
   },
   "dependencies": {
-    "express": "^4.21.2"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.6.3",
+    "vite": "^6.0.1"
   }
 }
